@@ -2,10 +2,8 @@
  */
 package blogpad.storage.control;
 
-import java.io.File;
-import java.io.IOException;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import blogpad.posts.entity.Post;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -14,20 +12,23 @@ import org.junit.jupiter.api.Test;
  */
 public class BlogStoreTest {
 
-    @Test
-    public void fileName() {
-        String fileName = BlogStore.fileName("If You Get A Book, You Have To Start Reading--an airhacks.fm podcast episode");
-        assertNotNull(fileName);
-        System.out.println(fileName);
-        File file = new File(fileName);
-        boolean created = false;
-        try {
-            created = file.createNewFile();
-            assertTrue(created);
-            file.delete();
-        } catch (IOException ex) {
-            throw new IllegalArgumentException("Invalid file name", ex);
-        }
+    BlogStore cut;
+
+    @BeforeEach
+    public void init() {
+        this.cut = new BlogStore();
+        this.cut.init();
     }
+
+    @Test
+    public void serialize() {
+        Post post = new Post();
+        post.content = "hello,world";
+        post.title = "*the first post*";
+        String serialized = this.cut.serialize(post);
+        System.out.println(" " + serialized);
+    }
+
+
 
 }

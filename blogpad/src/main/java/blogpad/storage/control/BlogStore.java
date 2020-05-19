@@ -42,9 +42,17 @@ public class BlogStore {
     }
 
     void write(String fileName, String content) throws IOException {
-        Path path = this.storageFolder.resolve(fileName);
+        Path path = this.get(fileName);
         Files.writeString(path, content);
+    }
 
+    Path get(String path) {
+        return this.storageFolder.resolve(path);
+    }
+
+    String read(String fileName) throws IOException {
+        Path path = this.get(fileName);
+        return Files.readString(path);
     }
 
 

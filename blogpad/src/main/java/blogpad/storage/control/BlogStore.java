@@ -2,6 +2,9 @@
 package blogpad.storage.control;
 
 import blogpad.posts.entity.Post;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.json.bind.Jsonb;
@@ -21,8 +24,11 @@ public class BlogStore {
 
     private Jsonb jsonb;
 
+    Path storageFolder;
+
     @PostConstruct
     public void init() {
+        this.storageFolder = Path.of(this.folder);
         JsonbConfig config = new JsonbConfig().
                 withFormatting(true);
         this.jsonb = JsonbBuilder.newBuilder().
@@ -33,6 +39,12 @@ public class BlogStore {
 
     String serialize(Post post) {
         return this.jsonb.toJson(post);
+    }
+
+    void write(String fileName, String content) throws IOException {
+        Path path = this.storageFolder.resolve(fileName);
+        Files.writeString(path, content);
+
     }
 
 

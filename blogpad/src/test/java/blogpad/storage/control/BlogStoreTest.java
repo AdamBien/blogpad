@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,9 +45,13 @@ public class BlogStoreTest {
         this.cut.write(fileName, content);
 
         String actual = this.cut.read(fileName);
-
         assertEquals(actual, content);
+    }
 
+    @Test
+    public void fileName() {
+        String fileName = BlogStore.fileName();
+        assertNotNull(fileName);
     }
 
 }

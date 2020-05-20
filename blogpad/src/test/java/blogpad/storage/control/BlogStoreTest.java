@@ -6,6 +6,7 @@ import blogpad.posts.entity.Post;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,14 +18,15 @@ import org.junit.jupiter.api.Test;
 public class BlogStoreTest {
 
     BlogStore cut;
-    static Path TEMP_PATH = Path.of("src/test/temp");
 
     @BeforeEach
     public void init() throws IOException {
+        String tempFolder = "target/temp" + System.currentTimeMillis();
+        Path TEMP_PATH = Path.of(tempFolder);
 
         Files.createDirectories(TEMP_PATH);
         this.cut = new BlogStore();
-        this.cut.folder = "src/test/temp";
+        this.cut.folder = tempFolder;
         this.cut.init();
     }
 
@@ -39,12 +41,23 @@ public class BlogStoreTest {
 
     @Test
     public void writeFile() throws IOException {
-        String fileName = "firstpost";
-        String content = "duke is nice";
+        Path fileName = Path.of("test" + System.currentTimeMillis());
+        String content = "{\"content\": \"duke is nice\",\"title\": \"firstpost\"}";
+
         this.cut.write(fileName, content);
 
-        String actual = this.cut.read(fileName);
+        String actual = this.cut.readFromStorageFolder(fileName);
         assertEquals(actual, content);
+    }
+
+    @Test
+    public void listFiles() throws IOException {
+        String fileName = "firstpost " + System.currentTimeMillis();
+        String content = "duke is nice";
+        this.cut.save(new Post(fileName, content));
+
+        List<Post> allFiles = this.cut.allFiles();
+        System.out.println("allFiles = " + allFiles);
     }
 
 }

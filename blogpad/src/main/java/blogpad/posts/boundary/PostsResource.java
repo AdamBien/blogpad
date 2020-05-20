@@ -3,8 +3,8 @@ package blogpad.posts.boundary;
 import blogpad.posts.entity.Post;
 import blogpad.storage.control.BlogStore;
 import java.net.URI;
+import java.util.List;
 import javax.inject.Inject;
-import javax.json.JsonArray;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -22,8 +22,8 @@ public class PostsResource {
     BlogStore store;
 
     @GET
-    public JsonArray posts() {
-        return null;
+    public List<Post> posts() {
+        return this.store.allFiles();
     }
 
     @POST

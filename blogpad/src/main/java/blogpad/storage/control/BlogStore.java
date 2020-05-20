@@ -36,8 +36,17 @@ public class BlogStore {
                 build();
     }
 
-    public void save(Post post) {
+    public String save(Post post) {
         String content = serialize(post);
+        String title = post.title;
+        String fileName = FileNames.encode(title);
+        try {
+            write(fileName, content);
+        } catch (IOException ex) {
+            throw new StorageException("Cannot store post " + post + " reason: " + ex.getMessage());
+        }
+        return fileName;
+
     }
 
 

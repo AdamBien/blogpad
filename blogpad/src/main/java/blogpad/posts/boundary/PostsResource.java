@@ -28,7 +28,7 @@ public class PostsResource {
     }
 
     @GET
-    @Path("${title}")
+    @Path("{title}")
     public Post post(@PathParam("title") String title) {
         return this.store.getPost(title);
     }

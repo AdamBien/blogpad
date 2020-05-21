@@ -1,8 +1,10 @@
 
 package com.airhacks;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URLEncoder;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -39,12 +41,33 @@ public class PostsResourceIT {
 
     @Test
     public void createPost() {
-        JsonObject post = Json.createObjectBuilder().
-                add("title", "hello").
-                add("content", "world").
-                build();
-        Response response = this.client.save(post);
+        Response response = savePost("hello " + System.currentTimeMillis(), "world");
         assertEquals(response.getStatus(), 201);
     }
+
+    @Test
+    public void getNonExistingTitle() {
+        String title = "hello " + System.currentTimeMillis();
+        Response response = this.client.getPostByTitle(title);
+        assertEquals(response.getStatus(), 204);
+    }
+
+    @Test
+    public void getExistingTitle() throws UnsupportedEncodingException {
+        String title = "hello " + System.currentTimeMillis();
+        this.savePost(title, "some content");
+
+        Response response = this.client.getPostByTitle(URLEncoder.encode(title, "UTF-8"));
+        assertEquals(response.getStatus(), 200);
+    }
+
+    Response savePost(String title, String content) {
+        JsonObject post = Json.createObjectBuilder().
+                add("title", title).
+                add("content", content).
+                build();
+        return this.client.save(post);
+    }
+
 
 }

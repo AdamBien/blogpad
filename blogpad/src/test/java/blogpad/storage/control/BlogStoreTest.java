@@ -9,6 +9,8 @@ import java.nio.file.Path;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,12 +73,35 @@ public class BlogStoreTest {
     @Test
     public void existingPostCheck() throws IOException {
         Path fileName = Path.of("test" + System.currentTimeMillis());
-        String content = "{\"content\": \"duke is nice\",\"title\": \"firstpost\"}";
+        String content = getPostAsJson();
 
         this.cut.write(fileName, content);
 
         boolean result = this.cut.postExists(fileName);
         assertTrue(result);
+    }
+
+    @Test
+    public void getExistingPost() throws IOException {
+        Path fileName = Path.of("test" + System.currentTimeMillis());
+        String content = getPostAsJson();
+
+        this.cut.write(fileName, content);
+
+        Post post = this.cut.getPost(fileName);
+        assertNotNull(post);
+
+    }
+
+    @Test
+    public void getNonExistingPost() {
+        Post post = this.cut.getPost("-no-existing-" + System.currentTimeMillis());
+        assertNull(post);
+
+    }
+
+    String getPostAsJson() {
+        return "{\"content\": \"duke is nice\",\"title\": \"firstpost\"}";
     }
 
 

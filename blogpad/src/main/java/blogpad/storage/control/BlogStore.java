@@ -91,6 +91,11 @@ public class BlogStore {
         return this.read(path);
     }
 
+    boolean postExists(Path title) {
+        Path fileInStore = this.get(title);
+        return Files.exists(fileInStore);
+    }
+
     String read(Path fileName) {
         try {
             return Files.readString(fileName);
@@ -110,6 +115,20 @@ public class BlogStore {
         } catch (IOException ex) {
             throw new StorageException("Cannot list contents of: " + this.storageFolder + " reason: " + ex.getMessage());
         }
+    }
+
+    public Post getPost(String title) {
+        Path fileName = Path.of(title);
+        return this.getPost(fileName);
+    }
+
+    public Post getPost(Path title) {
+        if (!postExists(title)) {
+            return null;
+        }
+        String content = this.readFromStorageFolder(title);
+        return deserialize(content);
+
     }
 
 }

@@ -32,11 +32,28 @@ public class BlogStore {
     @PostConstruct
     public void init() {
         this.storageFolder = Path.of(this.folder);
+        this.initializeStorageFolder(storageFolder);
         JsonbConfig config = new JsonbConfig().
                 withFormatting(true);
         this.jsonb = JsonbBuilder.newBuilder().
                 withConfig(config).
                 build();
+    }
+
+    void initializeStorageFolder(Path path) {
+
+        if (Files.exists(path)) {
+            if (!Files.isDirectory(path)) {
+                throw new StorageException("Path " + path + " is not a directory");
+            }
+
+        } else {
+            try {
+                Files.createDirectories(path);
+            } catch (IOException ex) {
+                throw new StorageException("Cannot create directory: " + path);
+            }
+        }
     }
 
     public String save(Post post) {

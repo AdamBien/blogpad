@@ -2,6 +2,7 @@
 package blogpad.storage.control;
 
 import blogpad.posts.entity.Post;
+import blogpad.tracing.boundary.Tracer;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -123,10 +124,13 @@ public class BlogStore {
     }
 
     public Post getPost(Path title) {
+        Tracer.info("Fetching: " + title);
         if (!postExists(title)) {
+            Tracer.info("Post does not exist " + title);
             return null;
         }
         String content = this.readFromStorageFolder(title);
+        Tracer.info("Post found: " + content);
         return deserialize(content);
 
     }

@@ -83,7 +83,7 @@ public class BlogStoreTest {
 
     @Test
     public void getExistingPost() throws IOException {
-        Path fileName = Path.of("test" + System.currentTimeMillis());
+        Path fileName = Path.of("test " + System.currentTimeMillis());
         String content = getPostAsJson();
 
         this.cut.write(fileName, content);

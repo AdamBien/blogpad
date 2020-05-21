@@ -22,7 +22,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 public class BlogStore {
 
     @Inject
-    @ConfigProperty(name = "BLOG_STORE_FOLDER")
+    @ConfigProperty(name = "blog.storage.folder")
     String folder;
 
     private Jsonb jsonb;

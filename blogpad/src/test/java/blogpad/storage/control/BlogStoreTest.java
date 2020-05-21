@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -59,5 +61,23 @@ public class BlogStoreTest {
         List<Post> allFiles = this.cut.allFiles();
         System.out.println("allFiles = " + allFiles);
     }
+
+    @Test
+    public void notExistingPostCheck() {
+        boolean result = this.cut.postExists(Path.of("not-existing" + System.currentTimeMillis()));
+        assertFalse(result);
+    }
+
+    @Test
+    public void existingPostCheck() throws IOException {
+        Path fileName = Path.of("test" + System.currentTimeMillis());
+        String content = "{\"content\": \"duke is nice\",\"title\": \"firstpost\"}";
+
+        this.cut.write(fileName, content);
+
+        boolean result = this.cut.postExists(fileName);
+        assertTrue(result);
+    }
+
 
 }

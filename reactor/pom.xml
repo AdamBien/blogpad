@@ -20,6 +20,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.graalvm.js</groupId>
+            <artifactId>js</artifactId>
+            <version>20.1.0</version>
+            <scope>compile</scope>
+        </dependency>                
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.5.2</version>

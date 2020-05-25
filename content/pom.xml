@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.airhacks</groupId>
-    <artifactId>blogpad</artifactId>
+    <artifactId>content</artifactId>
     <version>0.0.1</version>
     <packaging>war</packaging>
     <dependencies>
@@ -55,7 +55,7 @@
                 <version>2.22.2</version>
             </plugin>
         </plugins>        
-        <finalName>blogpad</finalName>
+        <finalName>content</finalName>
     </build>
     <properties>
         <maven.compiler.source>14</maven.compiler.source>

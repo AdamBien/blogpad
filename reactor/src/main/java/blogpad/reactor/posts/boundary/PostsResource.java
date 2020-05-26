@@ -1,4 +1,4 @@
-package blogpad.reactor.boundary;
+package blogpad.reactor.posts.boundary;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;

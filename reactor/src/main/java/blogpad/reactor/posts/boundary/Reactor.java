@@ -1,8 +1,8 @@
 
-package blogpad.reactor.boundary;
+package blogpad.reactor.posts.boundary;
 
-import blogpad.reactor.control.Content;
-import blogpad.reactor.control.Templates;
+import blogpad.reactor.posts.control.Content;
+import blogpad.reactor.posts.control.Templates;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

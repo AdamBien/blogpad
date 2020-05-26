@@ -1,5 +1,5 @@
 
-package blogpad.reactor.control;
+package blogpad.reactor.posts.control;
 
 /**
  *

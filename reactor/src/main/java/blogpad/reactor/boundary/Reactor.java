@@ -1,12 +1,15 @@
 
 package blogpad.reactor.boundary;
 
+import blogpad.reactor.control.Content;
+import blogpad.reactor.control.Templates;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
@@ -21,6 +24,12 @@ public class Reactor {
     private Source handlebars;
     private Source spg;
 
+    @Inject
+    Content content;
+
+    @Inject
+    Templates templates;
+
     @PostConstruct
     public void init() {
         try {
@@ -32,7 +41,13 @@ public class Reactor {
     }
 
     public String react(String title) {
-        return null;
+        String content = this.content.fetchPost(title);
+        String template = this.templates.fetchTemplate();
+        try {
+            return this.react(template, content);
+        } catch (IOException ex) {
+            throw new IllegalStateException("Cannot create content " + ex);
+        }
     }
 
     public String react(String templateContent, String parameterContentAsJSON) throws IOException {

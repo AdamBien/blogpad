@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author airhacks.com
  */
-@Path("articles")
+@Path("posts")
 public class PostsResource {
 
     @Inject

@@ -123,9 +123,10 @@ public class BlogStore {
     public List<Post> lastFiles(int max) {
         try {
             return Files.list(this.storageFolder).
-                    limit(max).
                     map(this::read).
                     map(this::deserialize).
+                    sorted((first, next) -> next.createdAt.compareTo(first.createdAt)).
+                    limit(max).
                     collect(Collectors.toList());
         } catch (IOException ex) {
             throw new StorageException("Cannot list contents of: " + this.storageFolder + " reason: " + ex.getMessage());

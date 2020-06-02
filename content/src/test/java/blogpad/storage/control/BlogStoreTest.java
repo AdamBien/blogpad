@@ -75,10 +75,11 @@ public class BlogStoreTest {
         List<Post> allFiles = this.cut.lastFiles(2);
         assertEquals(2, allFiles.size());
         System.out.println("lastFiles = " + allFiles);
-        Post second = allFiles.get(0);
-        Post first = allFiles.get(1);
-        assertTrue(first.title.startsWith("0"));
-        assertTrue(second.title.startsWith("1"));
+        Post first = allFiles.get(0);
+        Post second = allFiles.get(1);
+        //reverse sorted
+        assertTrue(first.title.startsWith("9"));
+        assertTrue(second.title.startsWith("8"));
     }
 
     @Test

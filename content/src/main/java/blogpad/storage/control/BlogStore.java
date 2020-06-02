@@ -110,14 +110,7 @@ public class BlogStore {
 
     }
     public List<Post> allFiles() {
-        try {
-            return Files.list(this.storageFolder).
-                    map(this::read).
-                    map(this::deserialize).
-                    collect(Collectors.toList());
-        } catch (IOException ex) {
-            throw new StorageException("Cannot list contents of: " + this.storageFolder + " reason: " + ex.getMessage());
-        }
+        return this.lastFiles(Integer.MAX_VALUE);
     }
 
     public List<Post> lastFiles(int max) {
@@ -125,12 +118,16 @@ public class BlogStore {
             return Files.list(this.storageFolder).
                     map(this::read).
                     map(this::deserialize).
-                    sorted((first, next) -> next.createdAt.compareTo(first.createdAt)).
+                    sorted(this::newestFirst).
                     limit(max).
                     collect(Collectors.toList());
         } catch (IOException ex) {
             throw new StorageException("Cannot list contents of: " + this.storageFolder + " reason: " + ex.getMessage());
         }
+    }
+
+    int newestFirst(Post first, Post next) {
+        return next.createdAt.compareTo(first.createdAt);
     }
 
     public Post getPost(String title) {

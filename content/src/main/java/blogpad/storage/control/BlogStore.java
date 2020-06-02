@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
@@ -58,6 +59,7 @@ public class BlogStore {
     }
 
     public String save(Post post) {
+        post.createdAt = LocalDateTime.now();
         String content = serialize(post);
         String title = post.title;
         String fileName = FileNames.encode(title);
@@ -110,6 +112,18 @@ public class BlogStore {
     public List<Post> allFiles() {
         try {
             return Files.list(this.storageFolder).
+                    map(this::read).
+                    map(this::deserialize).
+                    collect(Collectors.toList());
+        } catch (IOException ex) {
+            throw new StorageException("Cannot list contents of: " + this.storageFolder + " reason: " + ex.getMessage());
+        }
+    }
+
+    public List<Post> lastFiles(int max) {
+        try {
+            return Files.list(this.storageFolder).
+                    limit(max).
                     map(this::read).
                     map(this::deserialize).
                     collect(Collectors.toList());

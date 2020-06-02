@@ -65,6 +65,23 @@ public class BlogStoreTest {
     }
 
     @Test
+    public void lastTwoFiles() throws IOException {
+        for (int i = 0; i < 10; i++) {
+            String fileName = i + "_" + System.currentTimeMillis();
+            String content = "duke is nice " + i;
+            this.cut.save(new Post(fileName, content));
+        }
+
+        List<Post> allFiles = this.cut.lastFiles(2);
+        assertEquals(2, allFiles.size());
+        System.out.println("lastFiles = " + allFiles);
+        Post second = allFiles.get(0);
+        Post first = allFiles.get(1);
+        assertTrue(first.title.startsWith("0"));
+        assertTrue(second.title.startsWith("1"));
+    }
+
+    @Test
     public void notExistingPostCheck() {
         boolean result = this.cut.postExists(Path.of("not-existing" + System.currentTimeMillis()));
         assertFalse(result);

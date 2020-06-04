@@ -27,9 +27,9 @@ public class PostsResource {
     @GET
     public List<Post> posts(@QueryParam("max") @DefaultValue("-1") int max) {
         if (max == -1) {
-            return this.store.allFiles();
+            return this.store.allPosts();
         } else {
-            return this.store.lastFiles(max);
+            return this.store.recentPosts(max);
         }
     }
 

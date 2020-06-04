@@ -82,11 +82,11 @@ public class PostsStore {
         return Files.exists(fileInStore);
     }
 
-    public List<Post> allFiles() {
-        return this.lastFiles(Integer.MAX_VALUE);
+    public List<Post> allPosts() {
+        return this.recentPosts(Integer.MAX_VALUE);
     }
 
-    public List<Post> lastFiles(int max) {
+    public List<Post> recentPosts(int max) {
         try {
             return Files.list(this.postsDirectory).
                     map(FileOperations::read).

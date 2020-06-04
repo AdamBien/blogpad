@@ -51,7 +51,7 @@ public class PostsStoreTest {
         String content = "duke is nice";
         this.cut.save(new Post(fileName, content));
 
-        List<Post> allFiles = this.cut.allFiles();
+        List<Post> allFiles = this.cut.allPosts();
         System.out.println("allFiles = " + allFiles);
     }
 
@@ -63,7 +63,7 @@ public class PostsStoreTest {
             this.cut.save(new Post(fileName, content));
         }
 
-        List<Post> allFiles = this.cut.lastFiles(2);
+        List<Post> allFiles = this.cut.recentPosts(2);
         assertEquals(2, allFiles.size());
         System.out.println("lastFiles = " + allFiles);
         Post first = allFiles.get(0);

@@ -66,12 +66,20 @@ public class TemplatesStore {
 
 
     void write(Path fileName, String content) throws IOException {
-        Path path = this.get(fileName);
+        Path path = this.getFullyQualifiedPath(fileName);
         Files.writeString(path, content);
     }
 
-    Path get(Path path) {
+    Path getFullyQualifiedPath(Path path) {
         return this.templatesDirectory.resolve(path);
+    }
+
+    public Template getTemplate(String fileName) {
+        Path path = this.getFullyQualifiedPath(Path.of(fileName));
+        if (!Files.exists(path)) {
+            return null;
+        }
+        return this.deserialize(path);
     }
 
 }

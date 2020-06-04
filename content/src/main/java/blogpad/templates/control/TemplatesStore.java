@@ -2,10 +2,10 @@
 package blogpad.templates.control;
 
 import blogpad.storage.control.*;
+import static blogpad.storage.control.FileOperations.initializeStorageFolder;
 import blogpad.templates.entity.Template;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
@@ -26,31 +26,15 @@ public class TemplatesStore {
 
     @Inject
     @ConfigProperty(name = "templates.subdir", defaultValue = "templates")
-    String templatesSubFolder;
+    String templatesSubdirectory;
 
-    private Path templatesStorage;
+    Path templatesDirectory;
 
     @PostConstruct
     public void init() {
         Path storageFolder = Path.of(this.rootStorageDir);
-        this.templatesStorage = storageFolder.resolve(this.templatesSubFolder);
-        this.initializeStorageFolder(this.templatesStorage);
-
-    }
-
-    void initializeStorageFolder(Path path) {
-
-        if (Files.exists(path)) {
-            if (!Files.isDirectory(path)) {
-                throw new StorageException("Path " + path + " is not a directory");
-            }
-        } else {
-            try {
-                Files.createDirectories(path);
-            } catch (IOException ex) {
-                throw new StorageException("Cannot create directory: " + path);
-            }
-        }
+        this.templatesDirectory = storageFolder.resolve(this.templatesSubdirectory);
+        initializeStorageFolder(this.templatesDirectory);
     }
 
     public String save(Template template) {
@@ -72,18 +56,7 @@ public class TemplatesStore {
     }
 
     Path get(Path path) {
-        return this.templatesStorage.resolve(path);
-    }
-
-    String read(Path fileName) {
-        try {
-            return Files.readString(fileName);
-        } catch (NoSuchFileException ex) {
-            throw new StorageException("Cannot find file: " + fileName);
-        } catch (IOException ex) {
-            throw new StorageException("Cannot read file: " + fileName + " Reason: " + ex.toString());
-        }
-
+        return this.templatesDirectory.resolve(path);
     }
 
 }

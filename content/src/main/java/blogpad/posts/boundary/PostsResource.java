@@ -1,7 +1,7 @@
 package blogpad.posts.boundary;
 
 import blogpad.posts.entity.Post;
-import blogpad.storage.control.BlogStore;
+import blogpad.posts.control.PostsStore;
 import java.net.URI;
 import java.util.List;
 import javax.inject.Inject;
@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 public class PostsResource {
 
     @Inject
-    BlogStore store;
+    PostsStore store;
 
     @GET
     public List<Post> posts(@QueryParam("max") @DefaultValue("-1") int max) {

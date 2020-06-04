@@ -1,5 +1,5 @@
 
-package com.airhacks;
+package blogpad.posts;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -26,7 +26,7 @@ public class PostsResourceIT {
 
     @Before
     public void init() {
-        URI baseURI = URI.create("http://localhost:9080/blogpad/resources");
+        URI baseURI = URI.create("http://localhost:9080/content/resources");
         this.builder = RestClientBuilder.newBuilder().baseUri(baseURI);
         this.client = this.builder.build(PostsResourceClient.class);
     }

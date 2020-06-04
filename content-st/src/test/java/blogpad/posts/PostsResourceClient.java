@@ -1,5 +1,5 @@
 
-package com.airhacks;
+package blogpad.posts;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;

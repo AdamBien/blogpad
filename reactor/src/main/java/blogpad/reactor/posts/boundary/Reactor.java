@@ -1,7 +1,7 @@
 
 package blogpad.reactor.posts.boundary;
 
-import blogpad.reactor.posts.control.Content;
+import blogpad.reactor.posts.control.PostsFetcher;
 import blogpad.reactor.posts.control.Templates;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +10,7 @@ import java.io.Reader;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
@@ -25,7 +26,8 @@ public class Reactor {
     private Source spg;
 
     @Inject
-    Content content;
+    @RestClient
+    PostsFetcher content;
 
     @Inject
     Templates templates;
@@ -41,10 +43,10 @@ public class Reactor {
     }
 
     public String react(String title) {
-        String content = this.content.fetchPost(title);
+        String stringifedPost = this.content.getPostByTitle(title);
         String template = this.templates.fetchTemplate();
         try {
-            return this.react(template, content);
+            return this.react(template, stringifedPost);
         } catch (IOException ex) {
             throw new IllegalStateException("Cannot create content " + ex);
         }

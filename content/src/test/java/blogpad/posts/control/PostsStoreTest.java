@@ -97,7 +97,9 @@ public class PostsStoreTest {
         String content = getPostAsJson();
         write(fileName, content);
 
-        Post post = this.cut.getPost(fileName);
+        Post post = this.cut.
+                getPost(fileName).
+                orElse(null);
         assertNotNull(post);
 
     }
@@ -108,7 +110,8 @@ public class PostsStoreTest {
 
     @Test
     public void getNonExistingPost() {
-        Post post = this.cut.getPost("-no-existing-" + System.currentTimeMillis());
+        Post post = this.cut.getPost("-no-existing-" + System.currentTimeMillis()).
+                orElse(null);
         assertNull(post);
 
     }

@@ -91,7 +91,7 @@ public class PostsResourceIT {
     static JsonObject createPost(String title, String content) {
         PostsResourceIT posts = new PostsResourceIT();
         posts.init();
-        Response response = posts.savePost("comment-test", "a post with comments");
+        Response response = posts.savePost(title, content);
         return fetchPostFromLocation(response);
     }
 

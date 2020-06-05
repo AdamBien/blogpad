@@ -31,11 +31,11 @@ public class PostResource {
     @PathParam("title")
     String title;
 
-
+    @GET
     @Path("comments")
-    public Optional<List<Comment>> comments() {
+    public List<Comment> comments() {
         Optional<Post> post = this.getWithCurrentTitle();
-        return post.map(p -> p.comments);
+        return post.map(p -> p.comments).orElse(null);
     }
 
     @PUT

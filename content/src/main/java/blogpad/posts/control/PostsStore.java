@@ -118,7 +118,6 @@ public class PostsStore {
         String content = this.readFromStorageFolder(title);
         Tracer.info("Post found: " + content);
         return Optional.of(deserialize(content));
-
     }
 
 }

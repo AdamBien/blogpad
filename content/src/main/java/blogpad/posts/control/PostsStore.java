@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -103,20 +104,20 @@ public class PostsStore {
         return next.createdAt.compareTo(first.createdAt);
     }
 
-    public Post getPost(String title) {
+    public Optional<Post> getPost(String title) {
         Path fileName = Path.of(title);
         return this.getPost(fileName);
     }
 
-    public Post getPost(Path title) {
+    public Optional<Post> getPost(Path title) {
         Tracer.info("Fetching: " + title);
         if (!postExists(title)) {
             Tracer.info("Post does not exist " + title);
-            return null;
+            return Optional.empty();
         }
         String content = this.readFromStorageFolder(title);
         Tracer.info("Post found: " + content);
-        return deserialize(content);
+        return Optional.of(deserialize(content));
 
     }
 

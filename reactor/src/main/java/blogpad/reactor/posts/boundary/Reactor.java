@@ -11,6 +11,8 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.JsonObject;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
@@ -34,6 +36,14 @@ public class Reactor {
     @RestClient
     Templates templates;
 
+    @Inject
+    @ConfigProperty(name = "single.post.template", defaultValue = "post.html")
+    String singlePostTemplate;
+
+    @Inject
+    @ConfigProperty(name = "post.list.template", defaultValue = "list.html")
+    String postListTemplate;
+
     @PostConstruct
     public void init() {
         try {
@@ -44,6 +54,7 @@ public class Reactor {
         }
     }
 
+    @Timed
     public String react(String title) {
         String stringifedPost = this.posts.getPostByTitle(title);
         String template = this.getSinglePostTemplate();
@@ -55,7 +66,7 @@ public class Reactor {
     }
 
     String getSinglePostTemplate() {
-        JsonObject template = this.templates.getTemplateByName("single.html");
+        JsonObject template = this.templates.getTemplateByName(singlePostTemplate);
         return template.getString("content");
     }
 

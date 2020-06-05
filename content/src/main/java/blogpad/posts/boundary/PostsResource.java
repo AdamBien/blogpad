@@ -17,6 +17,7 @@ import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 @Path("posts")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -28,6 +29,9 @@ public class PostsResource {
 
     @Context
     ResourceContext context;
+
+    @Inject
+    PostResource postResource;
 
 
     @GET
@@ -41,14 +45,17 @@ public class PostsResource {
 
     @Path("{title}")
     public PostResource post(@PathParam("title") String title) {
-        return this.context.getResource(PostResource.class);
+        return this.context.initResource(postResource);
     }
 
 
     @PUT
-    public Response save(Post post) {
+    public Response save(@Context UriInfo info, Post post) {
         String fileName = this.store.save(post);
-        URI uri = URI.create(fileName);
+        URI uri = info.
+                getAbsolutePathBuilder().
+                path(fileName).
+                build();
         return Response.created(uri).build();
     }
 

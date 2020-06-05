@@ -8,8 +8,6 @@ import java.net.URLEncoder;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -84,11 +82,10 @@ public class PostsResourceIT {
     }
 
     static JsonObject fetchPost(String uri) {
-        return ClientBuilder.
-                newClient().
-                target(uri).
-                request(MediaType.APPLICATION_JSON).
-                get(JsonObject.class);
+        GetClient client = RestClientBuilder.newBuilder().
+                baseUri(URI.create(uri)).
+                build(GetClient.class);
+        return client.get();
     }
 
     static JsonObject createPost(String title, String content) {

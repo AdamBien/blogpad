@@ -31,7 +31,7 @@ public class PostResourceIT {
 
     @Test
     public void listComments() throws MalformedURLException {
-        JsonArray result = client.comments();
+        JsonArray result = client.comments("no-existing");
         assertNotNull(result);
     }
 
@@ -48,7 +48,7 @@ public class PostResourceIT {
                 add("content", content).
                 add("approved", approved).
                 build();
-        return this.client.add(post);
+        return this.client.add(postTitle, post);
     }
 
 }

@@ -8,11 +8,11 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNotNull;
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -23,7 +23,7 @@ public class TemplatesResourceIT {
     private RestClientBuilder builder;
     private TemplatesResourceClient client;
 
-    @Before
+    @BeforeEach
     public void init() {
         URI baseURI = URI.create("http://localhost:9080/content/resources");
         this.builder = RestClientBuilder.newBuilder().baseUri(baseURI);

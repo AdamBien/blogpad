@@ -8,12 +8,14 @@ import java.net.URLEncoder;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNotNull;
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -24,7 +26,7 @@ public class PostsResourceIT {
     private RestClientBuilder builder;
     private PostsResourceClient client;
 
-    @Before
+    @BeforeEach
     public void init() {
         URI baseURI = URI.create("http://localhost:9080/content/resources");
         this.builder = RestClientBuilder.newBuilder().baseUri(baseURI);
@@ -46,13 +48,16 @@ public class PostsResourceIT {
         String location = response.getHeaderString("Location");
         assertNotNull(location);
         System.out.println("location = " + location);
+        JsonObject actual = fetchPost(location);
+        assertNotNull(actual);
+        System.out.println("actual = " + actual);
     }
 
     @Test
     public void getNonExistingTitle() {
         String title = "hello " + System.currentTimeMillis();
         Response response = this.client.getPostByTitle(title);
-        assertEquals(response.getStatus(), 204);
+        assertEquals(204, response.getStatus());
     }
 
     @Test
@@ -69,7 +74,28 @@ public class PostsResourceIT {
                 add("title", title).
                 add("content", content).
                 build();
+
         return this.client.save(post);
+    }
+
+    static JsonObject fetchPostFromLocation(Response response) {
+        String uri = response.getHeaderString("Location");
+         return fetchPost(uri);
+    }
+
+    static JsonObject fetchPost(String uri) {
+        return ClientBuilder.
+                newClient().
+                target(uri).
+                request(MediaType.APPLICATION_JSON).
+                get(JsonObject.class);
+    }
+
+    static JsonObject createPost(String title, String content) {
+        PostsResourceIT posts = new PostsResourceIT();
+        posts.init();
+        Response response = posts.savePost("comment-test", "a post with comments");
+        return fetchPostFromLocation(response);
     }
 
 

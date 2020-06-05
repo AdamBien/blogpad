@@ -19,6 +19,10 @@ public class Comment {
         this.content = content;
     }
 
+    public Comment() {
+    }
+
+
     @Override
     public String toString() {
         return "Comment{" + "name=" + name + ", content=" + content + '}';

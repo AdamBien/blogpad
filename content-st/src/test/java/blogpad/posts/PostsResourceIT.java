@@ -43,6 +43,9 @@ public class PostsResourceIT {
     public void createPost() {
         Response response = savePost("hello " + System.currentTimeMillis(), "world");
         assertEquals(response.getStatus(), 201);
+        String location = response.getHeaderString("Location");
+        assertNotNull(location);
+        System.out.println("location = " + location);
     }
 
     @Test
@@ -61,7 +64,7 @@ public class PostsResourceIT {
         assertEquals(response.getStatus(), 200);
     }
 
-    Response savePost(String title, String content) {
+    public Response savePost(String title, String content) {
         JsonObject post = Json.createObjectBuilder().
                 add("title", title).
                 add("content", content).

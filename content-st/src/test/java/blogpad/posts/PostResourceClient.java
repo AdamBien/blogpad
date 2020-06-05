@@ -1,7 +1,6 @@
 
 package blogpad.posts;
 
-import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -22,11 +21,11 @@ import javax.ws.rs.core.Response;
 public interface PostResourceClient {
 
     @GET
-    @Path("${post}/comments")
-    public JsonArray comments(@PathParam("post") String post);
+    @Path("{post}/comments")
+    public Response comments(@PathParam("post") String title);
 
     @PUT
-    @Path("${post}")
+    @Path("{post}")
     public Response add(@PathParam("post") String post, JsonObject input);
 
 }

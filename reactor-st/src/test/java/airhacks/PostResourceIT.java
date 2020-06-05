@@ -20,7 +20,7 @@ public class PostResourceIT {
 
     @BeforeEach
     public void init() {
-        URI uri = URI.create("http://localhost:8080/reactor/resources/");
+        URI uri = URI.create("http://localhost:9080/reactor/resources/");
         this.client = RestClientBuilder.
                 newBuilder().
                 baseUri(uri).
@@ -30,7 +30,7 @@ public class PostResourceIT {
 
     @Test
     public void posts() {
-        Response response = this.client.fetchPost("any");
+        Response response = this.client.fetchPost("hello");
         int status = response.getStatus();
         assertEquals(200, status);
         String content = response.readEntity(String.class);

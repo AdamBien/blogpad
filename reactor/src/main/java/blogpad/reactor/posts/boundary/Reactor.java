@@ -10,6 +10,7 @@ import java.io.Reader;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.json.JsonObject;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
@@ -27,9 +28,10 @@ public class Reactor {
 
     @Inject
     @RestClient
-    PostsFetcher content;
+    PostsFetcher posts;
 
     @Inject
+    @RestClient
     Templates templates;
 
     @PostConstruct
@@ -43,13 +45,18 @@ public class Reactor {
     }
 
     public String react(String title) {
-        String stringifedPost = this.content.getPostByTitle(title);
-        String template = this.templates.fetchTemplate();
+        String stringifedPost = this.posts.getPostByTitle(title);
+        String template = this.getSinglePostTemplate();
         try {
             return this.react(template, stringifedPost);
         } catch (IOException ex) {
             throw new IllegalStateException("Cannot create content " + ex);
         }
+    }
+
+    String getSinglePostTemplate() {
+        JsonObject template = this.templates.getTemplateByName("single.html");
+        return template.getString("content");
     }
 
     public String react(String templateContent, String parameterContentAsJSON) throws IOException {

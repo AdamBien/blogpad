@@ -44,8 +44,9 @@ public class Reactor {
     @ConfigProperty(name = "post.list.template", defaultValue = "list.html")
     String postListTemplate;
 
+    @Timed
     @PostConstruct
-    public void init() {
+    public void initialize() {
         try {
             this.handlebars = Source.newBuilder("js", loadScriptFromJar("handlebars-v4.7.6.js"), "Handlebars").build();
             this.spg = Source.newBuilder("js", loadScriptFromJar("spg.js"), "spg").build();
@@ -56,13 +57,16 @@ public class Reactor {
 
     @Timed
     public String react(String title) {
-        String stringifedPost = this.posts.getPostByTitle(title);
         String template = this.getSinglePostTemplate();
-        try {
-            return this.react(template, stringifedPost);
-        } catch (IOException ex) {
-            throw new IllegalStateException("Cannot create content " + ex);
-        }
+        String stringifedPost = this.posts.getPostByTitle(title);
+        return this.react(template, stringifedPost);
+    }
+
+    @Timed
+    public String react(int max) {
+        String template = this.getPostListTemplate();
+        String stringifedPost = this.posts.recentPosts(max);
+        return this.react(template, stringifedPost);
     }
 
     String getSinglePostTemplate() {
@@ -70,7 +74,12 @@ public class Reactor {
         return template.getString("content");
     }
 
-    public String react(String templateContent, String parameterContentAsJSON) throws IOException {
+    String getPostListTemplate() {
+        JsonObject template = this.templates.getTemplateByName(postListTemplate);
+        return template.getString("content");
+    }
+
+    public String react(String templateContent, String parameterContentAsJSON) {
         try ( Context context = Context.create("js")) {
             Value bindings = context.getBindings("js");
             context.eval(this.handlebars);

@@ -29,7 +29,7 @@ public class PostResourceIT {
     }
 
     @Test
-    public void posts() {
+    public void fetchRenderedSinglePost() {
         Response response = this.client.fetchPost("hello");
         int status = response.getStatus();
         assertEquals(200, status);
@@ -37,5 +37,16 @@ public class PostResourceIT {
         assertNotNull(content);
         System.out.println("content = " + content);
     }
+
+    @Test
+    public void fetchRenderedRecentPosts() {
+        Response response = this.client.fetchRecentPosts(10);
+        int status = response.getStatus();
+        assertEquals(200, status);
+        String content = response.readEntity(String.class);
+        assertNotNull(content);
+        System.out.println("content = " + content);
+    }
+
 
 }

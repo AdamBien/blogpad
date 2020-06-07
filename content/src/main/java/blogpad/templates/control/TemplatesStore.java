@@ -39,12 +39,11 @@ public class TemplatesStore {
 
     }
 
-    public String save(Template template) {
-        String fileName = template.fileName;
+    public String save(String fileName, String content) {
         try {
-            write(Path.of(fileName), template.content);
+            write(Path.of(fileName), content);
         } catch (IOException ex) {
-            throw new StorageException("Cannot store post " + template + " reason: " + ex.getMessage());
+            throw new StorageException("Cannot store template " + fileName + " reason: " + ex.getMessage());
         }
         return fileName;
     }

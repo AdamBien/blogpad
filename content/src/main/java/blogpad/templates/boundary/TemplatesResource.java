@@ -32,9 +32,10 @@ public class TemplatesResource {
 
 
     @PUT
-    public Response save(Template post) {
-        String fileName = this.store.save(post);
-        URI uri = URI.create(fileName);
+    @Path("{fileName}")
+    public Response save(@PathParam("fileName") String fileName, String content) {
+        String createdURI = this.store.save(fileName, content);
+        URI uri = URI.create(createdURI);
         return Response.created(uri).build();
     }
 

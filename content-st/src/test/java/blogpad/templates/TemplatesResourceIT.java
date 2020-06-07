@@ -4,9 +4,7 @@ package blogpad.templates;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
-import javax.json.Json;
 import javax.json.JsonArray;
-import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -61,11 +59,7 @@ public class TemplatesResourceIT {
     }
 
     Response saveTemplate(String name, String content) {
-        JsonObject template = Json.createObjectBuilder().
-                add("fileName", name).
-                add("content", content).
-                build();
-        return this.client.save(template);
+        return this.client.save(name, content);
     }
 
 

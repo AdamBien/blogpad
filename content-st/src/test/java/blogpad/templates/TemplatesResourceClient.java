@@ -2,7 +2,6 @@
 package blogpad.templates;
 
 import javax.json.JsonArray;
-import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -24,11 +23,12 @@ public interface TemplatesResourceClient {
     @GET
     public JsonArray all();
 
-    @PUT
-    public Response save(JsonObject template);
-
     @GET
     @Path("{name}")
     public Response getTemplateByName(@PathParam("name") String name);
+
+    @PUT
+    @Path("fileName")
+    public Response save(@PathParam("fileName") String fileName, String content);
 
 }

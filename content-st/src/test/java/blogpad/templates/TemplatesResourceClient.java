@@ -28,7 +28,7 @@ public interface TemplatesResourceClient {
     public Response getTemplateByName(@PathParam("name") String name);
 
     @PUT
-    @Path("fileName")
+    @Path("{fileName}")
     public Response save(@PathParam("fileName") String fileName, String content);
 
 }

@@ -1,5 +1,5 @@
 
-package blogpad.templates.entity;
+package blogpad.installer.entity;
 
 /**
  *

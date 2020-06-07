@@ -37,11 +37,11 @@ public class Reactor {
     Templates templates;
 
     @Inject
-    @ConfigProperty(name = "single.post.template", defaultValue = "post.html")
+    @ConfigProperty(name = "single.post.template")
     String singlePostTemplate;
 
     @Inject
-    @ConfigProperty(name = "post.list.template", defaultValue = "list.html")
+    @ConfigProperty(name = "post.list.template")
     String postListTemplate;
 
     @Timed

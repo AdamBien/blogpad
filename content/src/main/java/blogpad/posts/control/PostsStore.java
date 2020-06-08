@@ -12,7 +12,6 @@ import blogpad.tracing.boundary.Tracer;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,14 +54,18 @@ public class PostsStore {
                 build();
     }
 
-    public String save(Post post) {
-        post.createdAt = LocalDateTime.now();
-        String content = serialize(post);
-        String title = post.title;
+    public String saveOrUpdate(Post newOrUpdated) {
+        String title = newOrUpdated.title;
+        Post updatedPost = this.getPost(title).
+                map(existing -> Post.copy(newOrUpdated, existing)).
+                orElseGet(() -> newOrUpdated.setCreationDate());
+
+        String content = serialize(updatedPost);
         String fileName = FileNames.encode(title);
         write(this.postsDirectory, fileName, content);
         return fileName;
     }
+
 
 
     String serialize(Post post) {

@@ -51,7 +51,7 @@ public class PostsResource {
 
     @PUT
     public Response save(@Context UriInfo info, Post post) {
-        String fileName = this.store.save(post);
+        String fileName = this.store.saveOrUpdate(post);
         URI uri = info.
                 getAbsolutePathBuilder().
                 path(fileName).

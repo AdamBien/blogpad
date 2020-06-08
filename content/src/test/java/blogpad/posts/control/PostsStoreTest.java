@@ -49,7 +49,7 @@ public class PostsStoreTest {
     public void listFiles() throws IOException {
         String fileName = "firstpost " + System.currentTimeMillis();
         String content = "duke is nice";
-        this.cut.save(new Post(fileName, content));
+        this.cut.saveOrUpdate(new Post(fileName, content));
 
         List<Post> allFiles = this.cut.allPosts();
         System.out.println("allFiles = " + allFiles);
@@ -60,7 +60,7 @@ public class PostsStoreTest {
         for (int i = 0; i < 10; i++) {
             String fileName = i + "_" + System.currentTimeMillis();
             String content = "duke is nice " + i;
-            this.cut.save(new Post(fileName, content));
+            this.cut.saveOrUpdate(new Post(fileName, content));
         }
 
         List<Post> allFiles = this.cut.recentPosts(2);
@@ -101,6 +101,30 @@ public class PostsStoreTest {
                 getPost(fileName).
                 orElse(null);
         assertNotNull(post);
+    }
+
+    @Test
+    public void createThenUpdate() {
+        String title = "createThenUpdate_" + System.currentTimeMillis();
+        Post initial = this.cut.deserialize(getPostAsJson(title, "old"));
+        Post updated = this.cut.deserialize(getPostAsJson(title, "new"));
+
+        String fileName = this.cut.saveOrUpdate(initial);
+        assertNotNull(fileName);
+        System.out.println("fileName = " + fileName);
+
+        Post initialFetched = this.cut.getPost(title).orElse(null);
+        assertNotNull(initialFetched.createdAt);
+        assertNull(initialFetched.modifiedAt);
+
+        fileName = this.cut.saveOrUpdate(updated);
+        assertNotNull(fileName);
+        System.out.println("fileName = " + fileName);
+
+        Post updatedFetched = this.cut.getPost(title).orElse(null);
+        assertNotNull(updatedFetched.createdAt);
+        assertNotNull(updatedFetched.modifiedAt);
+        assertEquals(initialFetched.createdAt, updatedFetched.createdAt);
 
     }
 
@@ -116,8 +140,17 @@ public class PostsStoreTest {
 
     }
 
+    String getPostAsJson(String title, String content) {
+        return """
+               {
+                    "title": "%s",
+                    "content": "%s"
+               }
+                """.formatted(title, content);
+    }
+
     String getPostAsJson() {
-        return "{\"content\": \"duke is nice\",\"title\": \"firstpost\"}";
+        return this.getPostAsJson("hello", "duke is nice");
     }
 
 

@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,6 +50,36 @@ public class PostsResourceIT {
         JsonObject actual = fetchPost(location);
         assertNotNull(actual);
         System.out.println("actual = " + actual);
+    }
+
+    @Test
+    public void createAndUpdatePost() throws InterruptedException {
+        String title = "createAndUpdatePost_" + System.currentTimeMillis();
+        Response response = savePost(title, "world");
+        assertEquals(response.getStatus(), 201);
+
+        String location = response.getHeaderString("Location");
+        assertNotNull(location);
+        System.out.println("location = " + location);
+        JsonObject actual = fetchPost(location);
+        assertNotNull(actual);
+
+        String createdAt = actual.getString("createdAt");
+        assertNotNull(createdAt);
+
+        String modifiedAt = actual.getString("modifiedAt", null);
+        assertNull(modifiedAt);
+
+        savePost(title, "world 2");
+        JsonObject updated = fetchPost(location);
+
+        String createdAtAfterUpdate = updated.getString("createdAt");
+        assertEquals(createdAt, createdAtAfterUpdate);
+
+        modifiedAt = updated.getString("modifiedAt");
+        assertNotNull(modifiedAt);
+
+        System.out.println("modifiedAt = " + modifiedAt);
     }
 
     @Test

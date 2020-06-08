@@ -40,10 +40,11 @@ public class Installer {
     }
 
     public void installTemplates() {
-        String firstPost = this.content.getFirstPost();
-        String content = this.content.getSinglePostTemplate();
-        Response saveTemplateResponse = this.client.saveTemplate(singlePostTemplateFileName, content);
+        String singlePostTemplate = this.content.getSinglePostTemplate();
+        Response saveTemplateResponse = this.client.saveTemplate(singlePostTemplateFileName, singlePostTemplate);
         registry.counter("installer_single_post_template_status_" + saveTemplateResponse.getStatus()).inc();
+
+        String firstPost = this.content.getFirstPost();
         Response savePostResponse = this.client.savePost(firstPost);
         registry.counter("installer_initial_post_status_" + savePostResponse.getStatus()).inc();
 

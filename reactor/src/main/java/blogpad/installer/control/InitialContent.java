@@ -28,7 +28,7 @@ public class InitialContent {
                       {{content}}
                    </section>
                    <footer>
-                       <small>created: {{createAt}}, modified: {{modifiedAt}}</small>
+                       <small>created: {{createdAt}}, modified: {{modifiedAt}}</small>
                    </footer>
                </article>
                """;

@@ -14,6 +14,7 @@ public class Post {
     public String title;
     public String content;
     public LocalDateTime createdAt;
+    public LocalDateTime modifiedAt;
     public List<Comment> comments;
 
     public Post(String title, String content) {
@@ -31,9 +32,26 @@ public class Post {
         return this;
     }
 
+    public static Post copy(Post updated, Post existing) {
+        System.out.println("blogpad.posts.entity.Post.copy() " + updated + " -> " + existing);
+        updated.createdAt = existing.createdAt;
+        updated.updateModificationTimestamp();
+        System.out.println("blogpad.posts.entity.Post.copy() " + updated + " -> " + existing);
+        return updated;
+    }
+
+    void updateModificationTimestamp() {
+        this.modifiedAt = LocalDateTime.now();
+    }
+
+    public Post setCreationDate() {
+        this.createdAt = LocalDateTime.now();
+        return this;
+    }
+
     @Override
     public String toString() {
-        return "Post{" + "title=" + title + ", content=" + content + ", createdAt=" + createdAt + '}';
+        return "Post{" + "title=" + title + ", content=" + content + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt + ", comments=" + comments + '}';
     }
 
 }

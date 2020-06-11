@@ -13,6 +13,7 @@ import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,8 +42,8 @@ public class PostsResourceIT {
     }
 
     @Test
-    public void createPost() {
-        Response response = savePost("hello " + System.currentTimeMillis(), "world");
+    public void createSinglePost() {
+        Response response = create("hello " + System.currentTimeMillis(), "world");
         assertEquals(response.getStatus(), 201);
         String location = response.getHeaderString("Location");
         assertNotNull(location);
@@ -53,9 +54,43 @@ public class PostsResourceIT {
     }
 
     @Test
+    public void createMultiplePostsWithSameTimes() {
+        String title = "hello " + System.currentTimeMillis() + "-duplicate";
+
+        Response response = create(title, "duplicate world");
+        assertEquals(response.getStatus(), 201);
+        String location = response.getHeaderString("Location");
+        assertNotNull(location);
+        System.out.println("location = " + location);
+        JsonObject actual = fetchPost(location);
+        assertNotNull(actual);
+
+        response = create(title, "duplicate world");
+        assertEquals(response.getStatus(), 201);
+        location = response.getHeaderString("Location");
+        System.out.println("location = " + location);
+        assertTrue(counterExists(location));
+        System.out.println("location = " + location);
+        actual = fetchPost(location);
+        assertNotNull(actual);
+        System.out.println("actual = " + actual);
+
+    }
+
+    boolean counterExists(String title) {
+        var lastDashIndex = title.lastIndexOf("-");
+        try {
+            Integer.parseInt(title.substring(lastDashIndex));
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
+    @Test
     public void createAndUpdatePost() throws InterruptedException {
         String title = "createAndUpdatePost_" + System.currentTimeMillis();
-        Response response = savePost(title, "world");
+        Response response = create(title, "world");
         assertEquals(response.getStatus(), 201);
 
         String location = response.getHeaderString("Location");
@@ -70,7 +105,7 @@ public class PostsResourceIT {
         String modifiedAt = actual.getString("modifiedAt", null);
         assertNull(modifiedAt);
 
-        savePost(title, "world 2");
+        update(title, "world 2");
         JsonObject updated = fetchPost(location);
 
         String createdAtAfterUpdate = updated.getString("createdAt");
@@ -92,19 +127,28 @@ public class PostsResourceIT {
     @Test
     public void getExistingTitle() throws UnsupportedEncodingException {
         String title = "hello " + System.currentTimeMillis();
-        this.savePost(title, "some content");
+        this.create(title, "some content");
 
         Response response = this.client.getPostByTitle(URLEncoder.encode(title, "UTF-8"));
         assertEquals(response.getStatus(), 200);
     }
 
-    public Response savePost(String title, String content) {
+    public Response update(String title, String content) {
         JsonObject post = Json.createObjectBuilder().
                 add("title", title).
                 add("content", content).
                 build();
 
-        return this.client.save(post);
+        return this.client.update(post);
+    }
+
+    public Response create(String title, String content) {
+        JsonObject post = Json.createObjectBuilder().
+                add("title", title).
+                add("content", content).
+                build();
+
+        return this.client.create(post);
     }
 
     static JsonObject fetchPostFromLocation(Response response) {
@@ -122,7 +166,7 @@ public class PostsResourceIT {
     static JsonObject createPost(String title, String content) {
         PostsResourceIT posts = new PostsResourceIT();
         posts.init();
-        Response response = posts.savePost(title, content);
+        Response response = posts.create(title, content);
         return fetchPostFromLocation(response);
     }
 

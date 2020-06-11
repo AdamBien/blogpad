@@ -91,7 +91,7 @@ public class PostsStore {
         for (int i = 0; i < maxCollisionsTitleCount; i++) {
             String normalizedTitle = String.format("%s-%d", title, i);
             if (!postExists(normalizedTitle)) {
-                return title;
+                return normalizedTitle;
             }
         }
         throw new StorageException("Max number of collisions: " + maxCollisionsTitleCount + " exceeded");

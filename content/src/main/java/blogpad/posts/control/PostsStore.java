@@ -28,6 +28,10 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 public class PostsStore {
 
     @Inject
+    @ConfigProperty(name = "max.collisions.title.count", defaultValue = "100")
+    int maxCollisionsTitleCount;
+
+    @Inject
     @ConfigProperty(name = "storage.dir")
     String rootStorageDir;
 
@@ -63,11 +67,24 @@ public class PostsStore {
                 orElseGet(() -> newOrUpdated.setCreationDate());
 
         String content = serialize(updatedPost);
-        String fileName = this.normalizer.normalize(title);
-        write(this.postsDirectory, fileName, content);
-        return fileName;
+        String normalizedTitle = this.normalizer.normalize(title);
+        String uniqueFileName = getUniqueFileName(normalizedTitle);
+        write(this.postsDirectory, uniqueFileName, content);
+        return uniqueFileName;
     }
 
+    String getUniqueFileName(String title) {
+        if (!postExists(title)) {
+            return title;
+        }
+        for (int i = 0; i < maxCollisionsTitleCount; i++) {
+            String normalizedTitle = String.format("%s-%d", title, i);
+            if (!postExists(normalizedTitle)) {
+                return title;
+            }
+        }
+        throw new StorageException("Max number of collisions: " + maxCollisionsTitleCount + " exceeded");
+    }
 
 
     String serialize(Post post) {
@@ -81,6 +98,10 @@ public class PostsStore {
     String readFromStorageFolder(Path fileName) {
         Path path = this.postsDirectory.resolve(fileName);
         return read(path);
+    }
+
+    boolean postExists(String title) {
+        return this.postExists(Path.of(title));
     }
 
     boolean postExists(Path title) {
@@ -110,7 +131,8 @@ public class PostsStore {
     }
 
     public Optional<Post> getPost(String title) {
-        Path fileName = Path.of(title);
+        String normalized = this.normalizer.normalize(title);
+        Path fileName = Path.of(normalized);
         return this.getPost(fileName);
     }
 

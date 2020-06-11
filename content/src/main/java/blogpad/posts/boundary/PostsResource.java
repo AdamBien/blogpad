@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -50,8 +51,18 @@ public class PostsResource {
 
 
     @PUT
-    public Response save(@Context UriInfo info, Post post) {
-        String fileName = this.store.saveOrUpdate(post);
+    public Response update(@Context UriInfo info, Post post) {
+        String fileName = this.store.update(post);
+        URI uri = info.
+                getAbsolutePathBuilder().
+                path(fileName).
+                build();
+        return Response.noContent().header("Content-Location", uri.toString()).build();
+    }
+
+    @POST
+    public Response created(@Context UriInfo info, Post post) {
+        String fileName = this.store.create(post);
         URI uri = info.
                 getAbsolutePathBuilder().
                 path(fileName).

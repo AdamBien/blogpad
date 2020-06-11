@@ -49,7 +49,7 @@ public class PostsStoreTest {
     public void listFiles() throws IOException {
         String fileName = "firstpost " + System.currentTimeMillis();
         String content = "duke is nice";
-        this.cut.saveOrUpdate(new Post(fileName, content));
+        this.cut.create(new Post(fileName, content));
 
         List<Post> allFiles = this.cut.allPosts();
         System.out.println("allFiles = " + allFiles);
@@ -60,7 +60,7 @@ public class PostsStoreTest {
         for (int i = 0; i < 10; i++) {
             String fileName = i + "_" + System.currentTimeMillis();
             String content = "duke is nice " + i;
-            this.cut.saveOrUpdate(new Post(fileName, content));
+            this.cut.create(new Post(fileName, content));
         }
 
         List<Post> allFiles = this.cut.recentPosts(2);
@@ -109,7 +109,7 @@ public class PostsStoreTest {
         Post initial = this.cut.deserialize(getPostAsJson(title, "old"));
         Post updated = this.cut.deserialize(getPostAsJson(title, "new"));
 
-        String fileName = this.cut.saveOrUpdate(initial);
+        String fileName = this.cut.create(initial);
         assertNotNull(fileName);
         System.out.println("fileName = " + fileName);
 
@@ -117,7 +117,7 @@ public class PostsStoreTest {
         assertNotNull(initialFetched.createdAt);
         assertNull(initialFetched.modifiedAt);
 
-        fileName = this.cut.saveOrUpdate(updated);
+        fileName = this.cut.update(updated);
         assertNotNull(fileName);
         System.out.println("fileName = " + fileName);
 

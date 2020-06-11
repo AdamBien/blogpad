@@ -60,11 +60,22 @@ public class PostsStore {
                 build();
     }
 
-    public String saveOrUpdate(Post newOrUpdated) {
-        String title = newOrUpdated.title;
+    public String create(Post newPost) {
+        String title = newPost.title;
+        Post updatedPost = newPost.setCreationDate();
+
+        String content = serialize(updatedPost);
+        String normalizedTitle = this.normalizer.normalize(title);
+        String uniqueFileName = getUniqueFileName(normalizedTitle);
+        write(this.postsDirectory, uniqueFileName, content);
+        return uniqueFileName;
+    }
+
+    public String update(Post existing) {
+        String title = existing.title;
         Post updatedPost = this.getPost(title).
-                map(existing -> Post.copy(newOrUpdated, existing)).
-                orElseGet(() -> newOrUpdated.setCreationDate());
+                map(fetched -> Post.copy(existing, fetched)).
+                orElseThrow(() -> new StorageException("Post with title " + title + " does not exist"));
 
         String content = serialize(updatedPost);
         String normalizedTitle = this.normalizer.normalize(title);
@@ -131,9 +142,9 @@ public class PostsStore {
     }
 
     public Optional<Post> getPost(String title) {
-        String normalized = this.normalizer.normalize(title);
+        String normalized = this.normalizer.normalize(title);        
         Path fileName = Path.of(normalized);
-        return this.getPost(fileName);
+        return this.getPost(fileName).map(p -> p.withTitle(normalized));
     }
 
     public Optional<Post> getPost(Path title) {

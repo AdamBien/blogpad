@@ -49,7 +49,7 @@ public class PostResource {
         }
 
         return post.map(p -> p.addComment(comment)).
-                map(this.store::saveOrUpdate).
+                map(this.store::update).
                 map(this::createdResponse).
                 get();
     }

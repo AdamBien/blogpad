@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class Post {
 
+    private String fileName;
     public String title;
     public String content;
     public LocalDateTime createdAt;
@@ -46,6 +47,15 @@ public class Post {
 
     public Post setCreationDate() {
         this.createdAt = LocalDateTime.now();
+        return this;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public Post withTitle(String fileName) {
+        this.fileName = fileName;
         return this;
     }
 

@@ -105,7 +105,8 @@ public class PostsResourceIT {
         String modifiedAt = actual.getString("modifiedAt", null);
         assertNull(modifiedAt);
 
-        update(title, "world 2");
+        response = update(title, "world 2");
+        location = response.getHeaderString("Content-Location");
         JsonObject updated = fetchPost(location);
 
         String createdAtAfterUpdate = updated.getString("createdAt");

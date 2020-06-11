@@ -37,4 +37,11 @@ public class TitleNormalizerTest {
         assertEquals(actual, "hello-world");
     }
 
+    @Test
+    public void emptyTitle() {
+        String input = "";
+        String actual = this.cut.normalize(input);
+        assertEquals(actual, "");
+    }
+
 }

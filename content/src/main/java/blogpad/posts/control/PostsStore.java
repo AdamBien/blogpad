@@ -88,7 +88,7 @@ public class PostsStore {
         if (!postExists(title)) {
             return title;
         }
-        for (int i = 0; i < maxCollisionsTitleCount; i++) {
+        for (int i = 1; i < maxCollisionsTitleCount + 1; i++) {
             String normalizedTitle = String.format("%s-%d", title, i);
             if (!postExists(normalizedTitle)) {
                 return normalizedTitle;

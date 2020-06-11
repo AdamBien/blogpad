@@ -2,7 +2,6 @@
 package blogpad.posts.control;
 
 import blogpad.posts.entity.Post;
-import blogpad.storage.control.FileNames;
 import blogpad.storage.control.FileOperations;
 import static blogpad.storage.control.FileOperations.initializeStorageFolder;
 import static blogpad.storage.control.FileOperations.read;
@@ -36,6 +35,9 @@ public class PostsStore {
     @ConfigProperty(name = "posts.subdir", defaultValue = "posts")
     String postsSubFolder;
 
+    @Inject
+    TitleNormalizer normalizer;
+
     private Jsonb jsonb;
 
     Path postsDirectory;
@@ -61,7 +63,7 @@ public class PostsStore {
                 orElseGet(() -> newOrUpdated.setCreationDate());
 
         String content = serialize(updatedPost);
-        String fileName = FileNames.encode(title);
+        String fileName = this.normalizer.normalize(title);
         write(this.postsDirectory, fileName, content);
         return fileName;
     }

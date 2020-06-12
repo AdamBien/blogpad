@@ -40,16 +40,22 @@ public class PostsStore {
     String postsSubFolder;
 
     @Inject
+    @ConfigProperty(name = "archive.subdir", defaultValue = "archive")
+    String archiveSubFolder;
+
+    @Inject
     TitleNormalizer normalizer;
 
     private Jsonb jsonb;
 
     Path postsDirectory;
+    Path archiveDirectory;
 
     @PostConstruct
     public void init() {
         Path storageFolder = Path.of(this.rootStorageDir);
         this.postsDirectory = storageFolder.resolve(this.postsSubFolder);
+        this.archiveDirectory = storageFolder.resolve(this.archiveSubFolder);
 
         initializeStorageFolder(this.postsDirectory);
 
@@ -156,6 +162,27 @@ public class PostsStore {
         String content = this.readFromStorageFolder(title);
         Tracer.info("Post found: " + content);
         return Optional.of(deserialize(content));
+    }
+
+    public void archive(Optional<Post> post) {
+        post.ifPresent(this::archivePost);
+    }
+
+    void archivePost(Post post) {
+        String title = post.title;
+        Path postFile = Path.of(post.getFileName());
+        Path titlePath = this.titleToPath(title);
+        Path archivePath = this.archiveDirectory.resolve(titlePath);
+        try {
+            Files.move(postFile, archivePath);
+        } catch (IOException ex) {
+            throw new StorageException("Cannot archive post with title: " + title);
+        }
+    }
+
+    Path titleToPath(String title) {
+        String normalized = this.normalizer.normalize(title);
+        return Path.of(normalized);
     }
 
 }

@@ -3,6 +3,7 @@ package blogpad.posts;
 
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -27,5 +28,9 @@ public interface PostResourceClient {
     @PUT
     @Path("{post}")
     public Response add(@PathParam("post") String post, JsonObject input);
+
+    @DELETE
+    @Path("{title}")
+    public Response archive(@PathParam("title") String post);
 
 }

@@ -28,6 +28,15 @@ public class PostResourceIT {
     }
 
     @Test
+    public void archivePost() {
+        String title = "archival_test_" + System.currentTimeMillis();
+        JsonObject post = PostsResourceIT.createPost(title, "to be archived");
+        Response response = this.client.archive(title);
+        assertEquals(200, response.getStatus());
+    }
+
+
+    @Test
     public void listCommentsForNonExistingPost() throws MalformedURLException {
         Response result = client.comments("not-existing");
         assertEquals(204, result.getStatus());

@@ -58,6 +58,7 @@ public class PostsStore {
         this.archiveDirectory = storageFolder.resolve(this.archiveSubFolder);
 
         initializeStorageFolder(this.postsDirectory);
+        initializeStorageFolder(this.archiveDirectory);
 
         JsonbConfig config = new JsonbConfig().
                 withFormatting(true);
@@ -170,13 +171,13 @@ public class PostsStore {
 
     void archivePost(Post post) {
         String title = post.title;
-        Path postFile = Path.of(post.getFileName());
+        Path postFile = this.postsDirectory.resolve(post.getFileName());
         Path titlePath = this.titleToPath(title);
         Path archivePath = this.archiveDirectory.resolve(titlePath);
         try {
             Files.move(postFile, archivePath);
         } catch (IOException ex) {
-            throw new StorageException("Cannot archive post with title: " + title);
+            throw new StorageException("Cannot archive post with title: " + title + " Reason: " + ex);
         }
     }
 

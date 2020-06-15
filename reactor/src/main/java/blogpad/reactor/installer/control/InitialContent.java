@@ -20,17 +20,17 @@ public class InitialContent {
 
     public String getSinglePostTemplate() {
         return """
-                 <article>
-                   <head>
-                       <h1>{{title}}</h1>
-                   </head>
-                   <section>
-                      {{content}}
-                   </section>
-                   <footer>
-                       <small>created: {{createdAt}}, modified: {{modifiedAt}}</small>
-                   </footer>
-               </article>
-               """;
+                  <article>
+                    <head>
+                        <h1>{{title}}</h1>
+                    </head>
+                    <section>
+                       {{content}}
+                    </section>
+                    <footer>
+                        <small>created: {{createdAt}}, modified: {{modifiedAt}}</small>
+                    </footer>
+                </article>
+                """;
     }
 }

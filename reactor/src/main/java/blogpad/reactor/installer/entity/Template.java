@@ -1,5 +1,5 @@
 
-package blogpad.installer.entity;
+package blogpad.reactor.installer.entity;
 
 /**
  *

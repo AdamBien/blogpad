@@ -1,5 +1,5 @@
 
-package blogpad.installer.control;
+package blogpad.reactor.installer.control;
 
 /**
  *

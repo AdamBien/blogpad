@@ -1,8 +1,8 @@
 
-package blogpad.installer.boundary;
+package blogpad.reactor.installer.boundary;
 
-import blogpad.installer.control.InitialContent;
-import blogpad.installer.control.PostsStoreClient;
+import blogpad.reactor.installer.control.PostsStoreClient;
+import blogpad.reactor.installer.control.InitialContent;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
@@ -12,6 +12,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.metrics.MetricRegistry;
 import org.eclipse.microprofile.metrics.annotation.RegistryType;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+
 
 /**
  *

@@ -30,7 +30,7 @@ public class PostResourceIT {
     @Test
     public void archivePost() {
         String title = "archival_test_" + System.currentTimeMillis();
-        JsonObject post = PostsResourceIT.createPost(title, "to be archived");
+        PostsResourceIT.createPost(title, "to be archived");
         Response response = this.client.archive(title);
         assertEquals(200, response.getStatus());
     }
@@ -45,7 +45,7 @@ public class PostResourceIT {
     @Test
     public void addCommentToExistingPost() {
         String title = "comment_test_" + System.currentTimeMillis();
-        JsonObject post = PostsResourceIT.createPost(title, "a post with comments");
+        PostsResourceIT.createPost(title, "a post with comments");
 
         Response response = saveComment(title, "a new comment", "world", false);
         assertEquals(201, response.getStatus());

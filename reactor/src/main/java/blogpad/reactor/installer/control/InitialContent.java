@@ -33,4 +33,23 @@ public class InitialContent {
                 </article>
                 """;
     }
+
+    public String getPostListTemplate() {
+        return """
+                {{#templateParameters}}
+                    <article>
+                        <head>
+                            <h1>{{title}}</h1>
+                        </head>
+                    <section>
+                        {{content}}
+                        </section>
+                        <footer>
+                            <small>created: {{createdAt}}, modified: {{modifiedAt}}</small>
+                        </footer>
+                    </article>
+                {{/templateParameters}}
+                """;
+    }
+
 }

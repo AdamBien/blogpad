@@ -33,6 +33,10 @@ public class Installer {
     String singlePostTemplateFileName;
 
     @Inject
+    @ConfigProperty(name = "post.list.template")
+    String postListTemplateFileName;
+
+    @Inject
     @RegistryType(type = MetricRegistry.Type.APPLICATION)
     MetricRegistry registry;
 
@@ -42,12 +46,16 @@ public class Installer {
 
     public void installTemplates() {
         String singlePostTemplate = this.content.getSinglePostTemplate();
-        Response saveTemplateResponse = this.client.saveTemplate(singlePostTemplateFileName, singlePostTemplate);
-        registry.counter("installer_single_post_template_status_" + saveTemplateResponse.getStatus()).inc();
+        Response saveResponse = this.client.saveTemplate(singlePostTemplateFileName, singlePostTemplate);
+        registry.counter("installer_single_post_template_status_" + saveResponse.getStatus()).inc();
+
+        String postListTemplate = this.content.getPostListTemplate();
+        saveResponse = this.client.saveTemplate(postListTemplateFileName, singlePostTemplate);
+        registry.counter("installer_post_list_template_status_" + saveResponse.getStatus()).inc();
 
         String firstPost = this.content.getFirstPost();
-        Response savePostResponse = this.client.savePost(firstPost);
-        registry.counter("installer_initial_post_status_" + savePostResponse.getStatus()).inc();
+        saveResponse = this.client.savePost(firstPost);
+        registry.counter("installer_initial_post_status_" + saveResponse.getStatus()).inc();
 
     }
 

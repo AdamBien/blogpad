@@ -2,6 +2,7 @@
 package blogpad.reactor.installer.control;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -17,7 +18,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 @RegisterRestClient(configKey = "content")
 public interface PostsStoreClient {
 
-    @PUT
+    @POST
     @Path("posts")
     Response savePost(String post);
 

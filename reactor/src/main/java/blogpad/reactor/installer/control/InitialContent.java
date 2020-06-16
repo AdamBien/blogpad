@@ -36,7 +36,7 @@ public class InitialContent {
 
     public String getPostListTemplate() {
         return """
-                {{#templateParameters}}
+                {{#posts}}
                     <article>
                         <head>
                             <h1>{{title}}</h1>
@@ -48,7 +48,7 @@ public class InitialContent {
                             <small>created: {{createdAt}}, modified: {{modifiedAt}}</small>
                         </footer>
                     </article>
-                {{/templateParameters}}
+                {{/posts}}
                 """;
     }
 

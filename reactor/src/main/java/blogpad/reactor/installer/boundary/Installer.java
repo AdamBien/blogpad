@@ -50,7 +50,7 @@ public class Installer {
         registry.counter("installer_single_post_template_status_" + saveResponse.getStatus()).inc();
 
         String postListTemplate = this.content.getPostListTemplate();
-        saveResponse = this.client.saveTemplate(postListTemplateFileName, singlePostTemplate);
+        saveResponse = this.client.saveTemplate(postListTemplateFileName, postListTemplate);
         registry.counter("installer_post_list_template_status_" + saveResponse.getStatus()).inc();
 
         String firstPost = this.content.getFirstPost();

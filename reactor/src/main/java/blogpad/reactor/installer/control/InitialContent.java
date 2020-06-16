@@ -41,8 +41,8 @@ public class InitialContent {
                         <head>
                             <h1>{{title}}</h1>
                         </head>
-                    <section>
-                        {{content}}
+                        <section>
+                            {{content}}
                         </section>
                         <footer>
                             <small>created: {{createdAt}}, modified: {{modifiedAt}}</small>

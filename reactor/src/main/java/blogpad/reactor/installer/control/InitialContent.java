@@ -69,7 +69,8 @@ public class InitialContent {
     }
 
     public String getRssFeedTemplate() {
-        return"""
+        return """
+            tbd
               """;
     }
     
@@ -97,7 +98,7 @@ public class InitialContent {
                     </entry>
                     </feed>
                   {{/posts}}
-                      """.formatted(feedTitle, feedAuthor,baseUri);
+                      """.formatted(feedTitle, feedAuthor,blogBaseURI);
     }
 
 }

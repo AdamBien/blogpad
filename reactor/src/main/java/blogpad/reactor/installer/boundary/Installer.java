@@ -37,6 +37,14 @@ public class Installer {
     String postListTemplateFileName;
 
     @Inject
+    @ConfigProperty(name = "rss.feed.template")
+    String rssFeedTemplateFileName;
+
+    @Inject
+    @ConfigProperty(name = "atom.feed.template")
+    String atomFeedTemplateFileName;
+
+    @Inject
     @RegistryType(type = MetricRegistry.Type.APPLICATION)
     MetricRegistry registry;
 
@@ -52,6 +60,14 @@ public class Installer {
         String postListTemplate = this.content.getPostListTemplate();
         saveResponse = this.client.saveTemplate(postListTemplateFileName, postListTemplate);
         registry.counter("installer_post_list_template_status_" + saveResponse.getStatus()).inc();
+
+        String atomFeedTemplate = this.content.getAtomFeedTemplate();
+        this.client.saveTemplate(atomFeedTemplateFileName, atomFeedTemplate);
+        registry.counter("installer_atom_feed_template_status_" + saveResponse.getStatus()).inc();
+
+        String rssFeedTemplate = this.content.getRssFeedTemplate();
+        this.client.saveTemplate(rssFeedTemplateFileName, rssFeedTemplate);
+        registry.counter("installer_rss_feed_template_status_" + saveResponse.getStatus()).inc();
 
         String firstPost = this.content.getFirstPost();
         saveResponse = this.client.savePost(firstPost);

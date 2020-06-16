@@ -2,6 +2,8 @@ package blogpad.posts.boundary;
 
 import blogpad.posts.control.PostsStore;
 import blogpad.posts.entity.Post;
+import blogpad.posts.entity.Posts;
+
 import java.net.URI;
 import java.util.List;
 import javax.inject.Inject;
@@ -36,7 +38,7 @@ public class PostsResource {
 
 
     @GET
-    public List<Post> posts(@QueryParam("max") @DefaultValue("-1") int max) {
+    public Posts posts(@QueryParam("max") @DefaultValue("-1") int max) {
         if (max == -1) {
             return this.store.allPosts();
         } else {

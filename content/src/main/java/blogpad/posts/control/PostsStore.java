@@ -2,6 +2,7 @@
 package blogpad.posts.control;
 
 import blogpad.posts.entity.Post;
+import blogpad.posts.entity.Posts;
 import blogpad.storage.control.FileOperations;
 import static blogpad.storage.control.FileOperations.initializeStorageFolder;
 import static blogpad.storage.control.FileOperations.read;
@@ -127,18 +128,19 @@ public class PostsStore {
         return Files.exists(fileInStore);
     }
 
-    public List<Post> allPosts() {
+    public Posts allPosts() {
         return this.recentPosts(Integer.MAX_VALUE);
     }
 
-    public List<Post> recentPosts(int max) {
+    public Posts recentPosts(int max) {
         try {
             return Files.list(this.postsDirectory).
                     map(FileOperations::read).
                     map(this::deserialize).
                     sorted(this::newestFirst).
                     limit(max).
-                    collect(Collectors.toList());
+                    collect(Posts::new, Posts::addPost, Posts::add);
+                    
         } catch (IOException ex) {
             throw new StorageException("Cannot list contents of: " + this.postsDirectory + " reason: " + ex.getMessage());
         }

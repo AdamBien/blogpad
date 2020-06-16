@@ -25,9 +25,9 @@ import javax.ws.rs.core.Response;
 public interface PostsResourceClient {
 
     @GET
-    public JsonArray recent(@QueryParam("max") @DefaultValue("-1") int max);
+    public JsonObject recent(@QueryParam("max") @DefaultValue("-1") int max);
 
-    default JsonArray all() {
+    default JsonObject all() {
         return this.recent(-1);
     }
 

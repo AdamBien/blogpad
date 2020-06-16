@@ -11,6 +11,7 @@ import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -36,9 +37,12 @@ public class PostsResourceIT {
     @Test
     public void fetchAllPosts() throws MalformedURLException {
         assertNotNull(client);
-        JsonArray result = client.all();
+        JsonObject result = client.all();
         assertNotNull(result);
         System.out.println("- " + result);
+        JsonArray posts = result.getJsonArray("posts");
+        assertNotNull(posts);
+        assertFalse(posts.isEmpty());
     }
 
     @Test

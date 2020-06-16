@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Post {
 
-    private String fileName;
+    public String fileName;
     public String title;
     public String content;
     public LocalDateTime createdAt;

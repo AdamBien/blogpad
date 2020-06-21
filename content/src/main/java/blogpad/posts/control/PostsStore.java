@@ -195,10 +195,18 @@ public class PostsStore {
 
     @Produces
     @Liveness
-    public HealthCheck call() {
+    public HealthCheck postsDirectoryCheck() {
         return () -> HealthCheckResponse.
                     named("posts-directory-exists").
                     state(Files.exists(this.postsDirectory)).
+                    build();
+    }
+    @Produces
+    @Liveness
+    public HealthCheck archiveDirectoryCheck() {
+        return () -> HealthCheckResponse.
+                    named("archive-directory-exists").
+                    state(Files.exists(this.archiveDirectory)).
                     build();
     }
 }

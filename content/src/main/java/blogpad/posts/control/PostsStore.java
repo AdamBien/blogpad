@@ -16,11 +16,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.health.HealthCheck;
+import org.eclipse.microprofile.health.HealthCheckResponse;
+import org.eclipse.microprofile.health.Liveness;
 
 /**
  *
@@ -188,4 +193,12 @@ public class PostsStore {
         return Path.of(normalized);
     }
 
+    @Produces
+    @Liveness
+    public HealthCheck call() {
+        return () -> HealthCheckResponse.
+                    named("posts-directory-exists").
+                    state(Files.exists(this.postsDirectory)).
+                    build();
+    }
 }

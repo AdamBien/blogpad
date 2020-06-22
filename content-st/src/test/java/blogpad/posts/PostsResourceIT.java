@@ -5,6 +5,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URLEncoder;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -32,6 +41,7 @@ public class PostsResourceIT {
         URI baseURI = URI.create("http://localhost:9080/content/resources");
         this.builder = RestClientBuilder.newBuilder().baseUri(baseURI);
         this.client = this.builder.build(PostsResourceClient.class);
+
     }
 
     @Test
@@ -130,13 +140,40 @@ public class PostsResourceIT {
     }
 
     @Test
-    public void getExistingTitle() throws UnsupportedEncodingException {
-        String title = "hello " + System.currentTimeMillis();
+    public void getExistingTitle() {
+        String title = "hello " + System.nanoTime();
         this.create(title, "some content");
 
-        Response response = this.client.getPostByTitle(URLEncoder.encode(title, "UTF-8"));
+        Response response;
+		try {
+			response = this.client.getPostByTitle(URLEncoder.encode(title, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalStateException(e);
+        }
         assertEquals(response.getStatus(), 200);
     }
+    
+    @Test
+    public void startTorture() {
+        ExecutorService threadPool = Executors.newFixedThreadPool(10);
+
+        List<CompletableFuture<Void>> futures = Stream.
+                generate(()->this.createScenario(threadPool)).
+                limit(200).
+                collect(Collectors.toList());
+        
+        futures.forEach(CompletableFuture::join);
+
+
+    }
+
+
+    public CompletableFuture<Void> createScenario(ExecutorService threadPool) {
+        return CompletableFuture.runAsync(this::getExistingTitle,threadPool).
+        thenRunAsync(this::getNonExistingTitle, threadPool);
+
+    }
+
 
     public Response update(String title, String content) {
         JsonObject post = Json.createObjectBuilder().

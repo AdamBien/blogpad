@@ -22,6 +22,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.eclipse.microprofile.metrics.annotation.Metered;
+
 @Path("posts")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -46,6 +48,7 @@ public class PostsResource {
         }
     }
 
+    @Metered
     @Path("{title}")
     public PostResource post(@PathParam("title") String title) {
         return this.context.initResource(postResource);

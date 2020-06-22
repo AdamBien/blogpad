@@ -9,9 +9,13 @@ import static blogpad.storage.control.FileOperations.read;
 import static blogpad.storage.control.FileOperations.write;
 import blogpad.storage.control.StorageException;
 import blogpad.tracing.boundary.Tracer;
+
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.spi.FileSystemProvider;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +30,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Liveness;
+import org.eclipse.microprofile.metrics.annotation.Gauge;
 
 /**
  *
@@ -204,9 +209,29 @@ public class PostsStore {
     @Produces
     @Liveness
     public HealthCheck archiveDirectoryCheck() {
-        return () -> HealthCheckResponse.
-                    named("archive-directory-exists").
-                    state(Files.exists(this.archiveDirectory)).
-                    build();
+        return () -> HealthCheckResponse.named("archive-directory-exists").
+                    state(Files.exists(this.archiveDirectory))
+                    .build();
+    }
+
+    @Produces
+    @Liveness
+    public HealthCheck freeDiskSpaceCheck() {
+        var usableSpace = this.getRemainingPostsDirectorySpaceInMb();
+        var enoughSpace = usableSpace > 50;
+        return () -> HealthCheckResponse.named("usable-free-space-for-posts").
+                state(enoughSpace).
+                withData("usable-space-for-posts", usableSpace + " MB")
+                .build();
+    }
+    
+    public long getRemainingPostsDirectorySpaceInMb() {
+        var usableSpace = 0l;
+		try {
+			usableSpace = Files.getFileStore(this.postsDirectory).getUsableSpace();
+        } catch (IOException e) {
+            throw new StorageException("Cannot fetch the usable space from " + this.postsDirectory, e);
+        }
+        return usableSpace / 1024 / 1024;
     }
 }

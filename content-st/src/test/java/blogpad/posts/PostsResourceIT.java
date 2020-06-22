@@ -153,26 +153,7 @@ public class PostsResourceIT {
         assertEquals(response.getStatus(), 200);
     }
     
-    @Test
-    public void startTorture() {
-        ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
-        List<CompletableFuture<Void>> futures = Stream.
-                generate(()->this.createScenario(threadPool)).
-                limit(200).
-                collect(Collectors.toList());
-        
-        futures.forEach(CompletableFuture::join);
-
-
-    }
-
-
-    public CompletableFuture<Void> createScenario(ExecutorService threadPool) {
-        return CompletableFuture.runAsync(this::getExistingTitle,threadPool).
-        thenRunAsync(this::getNonExistingTitle, threadPool);
-
-    }
 
 
     public Response update(String title, String content) {

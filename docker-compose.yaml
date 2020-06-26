@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  reactor:
+    build: reactor/
+    container_name: reactor    
+    ports:
+    - "8080:8080"
+  content:
+    build: content/
+    container_name: content
+    image: airhacks/content
+    ports:
+    - "8282:8080"
+  jaeger:
+    container_name: jaeger
+    image: jaegertracing/all-in-one
+    ports:
+    - "6831:6831"
+    - "5778:5778"
+    - "14268:14268"
+    - "16686:16686"

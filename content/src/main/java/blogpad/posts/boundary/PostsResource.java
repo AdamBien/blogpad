@@ -23,6 +23,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.eclipse.microprofile.metrics.annotation.Metered;
+import org.eclipse.microprofile.opentracing.Traced;
 
 @Path("posts")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -40,6 +41,7 @@ public class PostsResource {
 
 
     @GET
+    @Traced
     public Posts posts(@QueryParam("max") @DefaultValue("-1") int max) {
         if (max == -1) {
             return this.store.allPosts();
@@ -49,6 +51,7 @@ public class PostsResource {
     }
 
     @Metered
+    @Traced
     @Path("{title}")
     public PostResource post(@PathParam("title") String title) {
         return this.context.initResource(postResource);

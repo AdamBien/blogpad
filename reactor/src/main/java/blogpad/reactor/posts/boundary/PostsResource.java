@@ -9,6 +9,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.eclipse.microprofile.opentracing.Traced;
+
 /**
  *
  * @author airhacks.com
@@ -20,6 +22,7 @@ public class PostsResource {
     Reactor reactor;
 
     @GET
+    @Traced
     @Produces(MediaType.TEXT_HTML)
     @Path("{title}")
     public String fetchPostByTitle(@PathParam("title") String title) {
@@ -27,6 +30,7 @@ public class PostsResource {
     }
 
     @GET
+    @Traced
     @Produces(MediaType.TEXT_HTML)
     public String fetchRecentPosts(@QueryParam("max") @DefaultValue("-1") int max) {
         return this.reactor.react(max);

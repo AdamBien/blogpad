@@ -29,7 +29,7 @@ public class InitialContent {
                    "content":
                    "hello, world",
                    "title":
-                   "welcome to blogpad"
+                   "initial"
                }
                """;
     }

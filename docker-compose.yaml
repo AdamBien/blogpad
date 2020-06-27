@@ -8,6 +8,7 @@ services:
     - JAEGER_HOST=jaeger
     ports:
     - "8080:8080"
+    - "9990:9990"
   content:
     build: content/
     container_name: content
@@ -15,7 +16,8 @@ services:
     environment: 
     - JAEGER_HOST=jaeger
     ports:
-    - "8282:8080"
+    - "8081:8080"
+    - "9991:9990"
   jaeger:
     container_name: jaeger
     image: jaegertracing/all-in-one

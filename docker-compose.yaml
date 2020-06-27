@@ -3,12 +3,17 @@ services:
   reactor:
     build: reactor/
     container_name: reactor    
+    environment: 
+    - CONTENT_MP_REST_URI=http://content:8080/content/resources
+    - JAEGER_HOST=jaeger
     ports:
     - "8080:8080"
   content:
     build: content/
     container_name: content
     image: airhacks/content
+    environment: 
+    - JAEGER_HOST=jaeger
     ports:
     - "8282:8080"
   jaeger:

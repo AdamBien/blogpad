@@ -32,7 +32,10 @@ public class PostsStoreTest {
         Files.createDirectories(TEMP_PATH);
         this.cut = new PostsStore();
         this.cut.rootStorageDir = tempFolder;
+        this.cut.maxCollisionsTitleCount = 10;
         this.cut.postsSubFolder = "posts";
+        this.cut.archiveSubFolder = "archive";
+        this.cut.normalizer = TitleNormalizerTest.create();
         this.cut.init();
     }
 
@@ -51,8 +54,10 @@ public class PostsStoreTest {
         String content = "duke is nice";
         this.cut.create(new Post(fileName, content));
 
-        List<Post> allFiles = this.cut.allPosts();
+        var allFiles = this.cut.allPosts();
         System.out.println("allFiles = " + allFiles);
+        assertNotNull(allFiles.posts);
+        
     }
 
     @Test
@@ -63,11 +68,11 @@ public class PostsStoreTest {
             this.cut.create(new Post(fileName, content));
         }
 
-        List<Post> allFiles = this.cut.recentPosts(2);
-        assertEquals(2, allFiles.size());
+        var allFiles = this.cut.recentPosts(2);
+        assertEquals(2, allFiles.posts.size());
         System.out.println("lastFiles = " + allFiles);
-        Post first = allFiles.get(0);
-        Post second = allFiles.get(1);
+        var first = allFiles.posts.get(0);
+        var second = allFiles.posts.get(1);
         //reverse sorted
         assertTrue(first.title.startsWith("9"));
         assertTrue(second.title.startsWith("8"));
@@ -92,7 +97,7 @@ public class PostsStoreTest {
 
     @Test
     public void getExistingPost() throws IOException {
-        String fileName = "test " + System.currentTimeMillis();
+        String fileName = "test-" + System.currentTimeMillis();
 
         String content = getPostAsJson();
         write(fileName, content);
@@ -113,7 +118,7 @@ public class PostsStoreTest {
         assertNotNull(fileName);
         System.out.println("fileName = " + fileName);
 
-        Post initialFetched = this.cut.getPost(title).orElse(null);
+        Post initialFetched = this.cut.getPost(fileName).orElse(null);
         assertNotNull(initialFetched.createdAt);
         assertNull(initialFetched.modifiedAt);
 
@@ -121,7 +126,7 @@ public class PostsStoreTest {
         assertNotNull(fileName);
         System.out.println("fileName = " + fileName);
 
-        Post updatedFetched = this.cut.getPost(title).orElse(null);
+        Post updatedFetched = this.cut.getPost(fileName).orElse(null);
         assertNotNull(updatedFetched.createdAt);
         assertNotNull(updatedFetched.modifiedAt);
         assertEquals(initialFetched.createdAt, updatedFetched.createdAt);

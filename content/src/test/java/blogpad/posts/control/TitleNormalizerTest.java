@@ -21,6 +21,11 @@ public class TitleNormalizerTest {
         this.cut.replacementCharacter = "-";
     }
 
+    public static TitleNormalizer create() {
+        var test = new TitleNormalizerTest();
+        test.init();
+        return test.cut;
+    }
 
     @Test
     public void validTitle() {

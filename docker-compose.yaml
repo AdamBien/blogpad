@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   reactor:
-    build: reactor/
+    build: reactor/reactor
     container_name: reactor    
     environment: 
     - CONTENT_MP_REST_URI=http://content:8080/content/resources
@@ -10,7 +10,7 @@ services:
     - "8080:8080"
     - "9990:9990"
   content:
-    build: content/
+    build: content/content
     container_name: content
     image: airhacks/content
     environment: 

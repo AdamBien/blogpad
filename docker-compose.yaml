@@ -6,6 +6,11 @@ services:
     environment: 
     - CONTENT_MP_REST_URI=http://content:8080/content/resources
     - JAEGER_HOST=jaeger
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9990/health"]
+      interval: 5s
+      timeout: 1s
+      retries: 5    
     ports:
     - "8080:8080"
     - "9990:9990"
@@ -15,6 +20,11 @@ services:
     image: airhacks/content
     environment: 
     - JAEGER_HOST=jaeger
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9990/health"]
+      interval: 5s
+      timeout: 1s
+      retries: 5    
     ports:
     - "8081:8080"
     - "9991:9990"

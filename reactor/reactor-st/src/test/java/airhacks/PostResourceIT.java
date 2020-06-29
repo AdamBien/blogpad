@@ -20,7 +20,7 @@ public class PostResourceIT {
 
     @BeforeEach
     public void init() {
-        URI uri = URI.create("http://localhost:9080/reactor/resources/");
+        var uri = Configuration.getURIValue("resource.uri");
         this.client = RestClientBuilder.
                 newBuilder().
                 baseUri(uri).

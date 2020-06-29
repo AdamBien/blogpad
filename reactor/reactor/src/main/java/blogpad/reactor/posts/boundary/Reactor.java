@@ -2,6 +2,7 @@
 package blogpad.reactor.posts.boundary;
 
 import blogpad.reactor.posts.control.PostsFetcher;
+import blogpad.reactor.posts.control.PostsResourceClient;
 import blogpad.reactor.posts.control.Templates;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +30,6 @@ public class Reactor {
     private Source spg;
 
     @Inject
-    @RestClient
     PostsFetcher posts;
 
     @Inject

@@ -10,13 +10,15 @@ import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import airhacks.Configuration;
+
 public class FeedsResourceIT {
 
     private FeedsResourceClient client;
 
 	@BeforeEach
     public void init() {
-        URI uri = URI.create("http://localhost:9080/reactor/resources");
+        var uri = Configuration.getURIValue("resource.uri");
         this.client = RestClientBuilder.newBuilder().baseUri(uri).build(FeedsResourceClient.class);
     }
 

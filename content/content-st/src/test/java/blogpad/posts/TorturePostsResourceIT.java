@@ -22,6 +22,8 @@ import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import blogpad.Configuration;
+
 /**
  * TorturePostsResourceIT
  */
@@ -31,17 +33,15 @@ public class TorturePostsResourceIT {
 
     @BeforeEach
     public void init() {
-        URI clientURI = URI.create("http://localhost:9080/content/resources");
         RestClientBuilder clientBuilder = RestClientBuilder.
                 newBuilder().
-                baseUri(clientURI);
+                baseUri(Configuration.getURIValue("resource.uri"));
         this.client = clientBuilder.build(PostsResourceClient.class);
 
 
-        URI metricsURI = URI.create("http://localhost:9080/metrics/application");
         RestClientBuilder metricsBuilder = RestClientBuilder.
                 newBuilder().
-                baseUri(metricsURI);
+                baseUri(Configuration.getURIValue("metrics.uri"));
 
         this.metrics = metricsBuilder.build(GetClient.class);
 

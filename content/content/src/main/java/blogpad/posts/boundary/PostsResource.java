@@ -5,7 +5,10 @@ import blogpad.posts.entity.Post;
 import blogpad.posts.entity.Posts;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
+
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
@@ -26,6 +29,7 @@ import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.eclipse.microprofile.opentracing.Traced;
 
 @Path("posts")
+@PermitAll
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class PostsResource {
@@ -38,6 +42,9 @@ public class PostsResource {
 
     @Inject
     PostResource postResource;
+
+    @Inject
+    Principal principal;
 
 
     @GET
@@ -54,6 +61,7 @@ public class PostsResource {
     @Traced
     @Path("{title}")
     public PostResource post(@PathParam("title") String title) {
+        System.out.println("principal " + this.principal.getName());
         return this.context.initResource(postResource);
     }
 

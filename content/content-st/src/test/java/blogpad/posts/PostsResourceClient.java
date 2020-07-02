@@ -15,6 +15,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
+
 /**
  *
  * @author airhacks.com
@@ -39,6 +41,15 @@ public interface PostsResourceClient {
 
     @GET
     @Path("{title}")
+    @ClientHeaderParam(name="Authorization", value="{getToken}")
     public Response getPostByTitle(@PathParam("title") String title);
+
+    default String getToken() {
+        return"""
+                Bearer eyJraWQiOiJqd3Qua2V5IiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.
+                eyJzdWIiOiJkdWtlIiwidXBuIjoiZHVrZSIsImF1dGhfdGltZSI6MTU5MzcxMTIwNywiaXNzIjoiYWlyaGFja3MiLCJncm91cHMiOlsicmVhZGVyIiwiYXV0aG9yIl0sImV4cCI6MTU5MzcxMjIwNywiaWF0IjoxNTkzNzExMjA3LCJqdGkiOiI0MiJ9.
+                awnjU853biIAqWLqa4mzMOm_2JffRM4g0WQ8iZylA8dDmOZTjGcR4l5R-u8I3vr0IhmS2I4s7OtCOKXByBM4aeCeiEyqNjXz516cDsYZ7x6AalHBA0uUQMDwFfzENaK885w2dwSC7DwC-Yhhx5FachdO0GxAt_2CNJCEtMaASm1UDgxvzz-rC6TgKAQsgV7-HwfnIuEHnYRm_PGWYuI4adXzyRcJQZF7jdRtmWbtMNUWSiEjB3HN2M-QJ_zAkY6kfdMm1mFQFz-UePLI3ZoLMOO_Anj2A1Vv8LoQx3oz1boQPS_a0XyjfmgPc3V5NsMkokLOVrGEwbhbRP0VivWxnQ        
+                """;
+    }
 
 }

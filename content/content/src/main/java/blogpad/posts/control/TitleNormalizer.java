@@ -1,6 +1,7 @@
 
 package blogpad.posts.control;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -8,6 +9,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
  *
  * @author airhacks.com
  */
+@RequestScoped
 public class TitleNormalizer {
 
     @Inject

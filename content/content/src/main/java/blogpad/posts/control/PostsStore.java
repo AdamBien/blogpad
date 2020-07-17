@@ -1,24 +1,15 @@
 
 package blogpad.posts.control;
 
-import blogpad.posts.entity.Post;
-import blogpad.posts.entity.Posts;
-import blogpad.storage.control.FileOperations;
 import static blogpad.storage.control.FileOperations.initializeStorageFolder;
 import static blogpad.storage.control.FileOperations.read;
 import static blogpad.storage.control.FileOperations.write;
-import blogpad.storage.control.StorageException;
-import blogpad.tracing.boundary.Tracer;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.spi.FileSystemProvider;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
@@ -26,16 +17,23 @@ import javax.inject.Inject;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
+
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Liveness;
-import org.eclipse.microprofile.metrics.annotation.Gauge;
+
+import blogpad.posts.entity.Post;
+import blogpad.posts.entity.Posts;
+import blogpad.storage.control.FileOperations;
+import blogpad.storage.control.StorageException;
+import blogpad.tracing.boundary.Tracer;
 
 /**
  *
  * @author airhacks.com
  */
+@ApplicationScoped
 public class PostsStore {
 
     @Inject

@@ -1,2 +1,3 @@
-FROM airhacks/wildfly-mp-jaeger
-COPY ./target/reactor.war ${DEPLOYMENT_DIR}
+FROM airhacks/quarkus
+COPY target/lib/* ${INSTALL_DIR}/
+COPY target/supersonic-runner.jar ${DEPLOYMENT_DIR}

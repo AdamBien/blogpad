@@ -1,14 +1,16 @@
 
 package blogpad.templates;
 
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import javax.json.JsonArray;
-import javax.ws.rs.core.Response;
-import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+
+import javax.json.JsonArray;
+import javax.ws.rs.core.Response;
+
+import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

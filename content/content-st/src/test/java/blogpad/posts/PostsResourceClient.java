@@ -45,11 +45,7 @@ public interface PostsResourceClient {
     public Response getPostByTitle(@PathParam("title") String title);
 
     default String getToken() {
-        return"""
-                Bearer eyJraWQiOiJqd3Qua2V5IiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.
-                eyJzdWIiOiJkdWtlIiwidXBuIjoiZHVrZSIsImF1dGhfdGltZSI6MTU5MzcxMTIwNywiaXNzIjoiYWlyaGFja3MiLCJncm91cHMiOlsicmVhZGVyIiwiYXV0aG9yIl0sImV4cCI6MTU5MzcxMjIwNywiaWF0IjoxNTkzNzExMjA3LCJqdGkiOiI0MiJ9.
-                awnjU853biIAqWLqa4mzMOm_2JffRM4g0WQ8iZylA8dDmOZTjGcR4l5R-u8I3vr0IhmS2I4s7OtCOKXByBM4aeCeiEyqNjXz516cDsYZ7x6AalHBA0uUQMDwFfzENaK885w2dwSC7DwC-Yhhx5FachdO0GxAt_2CNJCEtMaASm1UDgxvzz-rC6TgKAQsgV7-HwfnIuEHnYRm_PGWYuI4adXzyRcJQZF7jdRtmWbtMNUWSiEjB3HN2M-QJ_zAkY6kfdMm1mFQFz-UePLI3ZoLMOO_Anj2A1Vv8LoQx3oz1boQPS_a0XyjfmgPc3V5NsMkokLOVrGEwbhbRP0VivWxnQ        
-                """;
+        return "Bearer eyJraWQiOiJqd3Qua2V5IiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJkdWtlIiwidXBuIjoiZHVrZSIsImF1dGhfdGltZSI6MTU5NDk5NTA1MSwiaXNzIjoiYWlyaGFja3MiLCJncm91cHMiOlsicmVhZGVyIiwiYXV0aG9yIl0sImV4cCI6MjU5MzcxMjIwNywiaWF0IjoxNTk0OTk1MDUxLCJqdGkiOiI0MiJ9.b_ED-I9BVJvWJ5sCnfPq5H1V9-tTr3yg0UVuFbqICVazPp2BCq_aqHxETnTYPyXGivuQJMu1tHtckb2xepIKhYx0k8GEiUDljTCgc8IrO6tv4eGQHuTKBZYOchqW5Bt9MbTl16a2FcRwnvi6PfG6aFbIqExAGN1HWnLP0vDLLRulquGQRu1iK1D0gXsYT3l5UhK0AiIIdXo716TJc8J2GvfIZeUziYZ1o8hxb1aOXF19CTzcPJtaeyvzQzHLLWgwlO5U8q8q_AFC59MO_Wrn80L3X-lOpF5_tcMVVtxhMFVL9jlA_NlpFDGRL9d4RECHGnZIejeOsb2N5k8rlK-evw";
     }
 
 }

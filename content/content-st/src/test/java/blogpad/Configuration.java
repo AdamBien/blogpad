@@ -2,10 +2,7 @@ package blogpad;
 
 import java.net.URI;
 
-import org.eclipse.microprofile.config.Config;
 import org.eclipse.microprofile.config.ConfigProvider;
-import org.eclipse.microprofile.config.spi.ConfigProviderResolver;
-import org.eclipse.microprofile.config.spi.Converter;
 
 public interface Configuration {
     static String getStringValue(String key) {

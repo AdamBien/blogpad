@@ -30,7 +30,8 @@ public class Reactor {
     private Source spg;
 
     @Inject
-    PostsFetcher posts;
+    @RestClient
+    PostsResourceClient posts;
 
     @Inject
     @RestClient

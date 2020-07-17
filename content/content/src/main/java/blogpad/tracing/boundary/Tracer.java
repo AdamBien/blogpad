@@ -1,6 +1,8 @@
 
 package blogpad.tracing.boundary;
 
+import java.lang.System.Logger.Level;
+
 /**
  *
  * @author airhacks.com
@@ -8,7 +10,7 @@ package blogpad.tracing.boundary;
 public class Tracer {
 
     public static void info(String message) {
-        System.out.println(message);
+        System.getLogger("tracer").log(Level.INFO, message);
     }
 
 }

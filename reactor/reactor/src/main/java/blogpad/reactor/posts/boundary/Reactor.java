@@ -1,23 +1,25 @@
 
 package blogpad.reactor.posts.boundary;
 
-import blogpad.reactor.posts.control.PostsFetcher;
-import blogpad.reactor.posts.control.PostsResourceClient;
-import blogpad.reactor.posts.control.Templates;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.JsonObject;
+
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.metrics.annotation.Timed;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
+
+import blogpad.reactor.posts.control.PostsResourceClient;
+import blogpad.reactor.posts.control.Templates;
 
 /**
  *

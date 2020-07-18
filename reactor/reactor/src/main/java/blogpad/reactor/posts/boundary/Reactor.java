@@ -8,6 +8,7 @@ import java.io.Reader;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.json.JsonObject;
 
@@ -25,7 +26,7 @@ import blogpad.reactor.posts.control.Templates;
  *
  * @author airhacks.com
  */
-@ApplicationScoped
+@RequestScoped
 public class Reactor {
 
     private Source handlebars;

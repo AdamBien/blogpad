@@ -4,8 +4,7 @@ services:
     build: reactor/reactor
     container_name: reactor    
     environment: 
-    - CONTENT_MP_REST_URI=http://content:8080/
-    - JAEGER_HOST=jaeger
+    - "CONTENT_MP_REST_URI=http://content:8080/"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 5s
@@ -16,8 +15,6 @@ services:
   content:
     build: content/content
     container_name: content
-    environment: 
-    - JAEGER_HOST=jaeger
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 5s

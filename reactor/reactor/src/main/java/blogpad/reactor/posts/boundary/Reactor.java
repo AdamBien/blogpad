@@ -60,8 +60,9 @@ public class Reactor {
 
     @Timed
     public String react(String title) {
-        String template = this.getSinglePostTemplate();
-        String stringifedPost = this.posts.getPostByTitle(title);
+        var template = this.getSinglePostTemplate();
+        var response = this.posts.getPostByTitle(title);
+        String stringifedPost = response.readEntity(String.class);
         return this.react(template, stringifedPost);
     }
 

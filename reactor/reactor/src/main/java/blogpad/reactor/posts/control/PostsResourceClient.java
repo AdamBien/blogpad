@@ -9,6 +9,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -23,7 +25,7 @@ public interface PostsResourceClient {
 
     @GET
     @Path("{title}")
-    public String getPostByTitle(@PathParam("title") String title);
+    public Response getPostByTitle(@PathParam("title") String title);
 
     @GET
     public String recentPosts(@QueryParam("max") @DefaultValue("-1") int max);

@@ -1,24 +1,27 @@
 
 package blogpad.reactor.installer.boundary;
 
-import blogpad.reactor.installer.control.PostsStoreClient;
-import io.quarkus.runtime.Startup;
-import blogpad.reactor.installer.control.InitialContent;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Initialized;
-import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
+
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.metrics.MetricRegistry;
 import org.eclipse.microprofile.metrics.annotation.RegistryType;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+
+import blogpad.logging.boundary.Blogger;
+import blogpad.reactor.installer.control.InitialContent;
+import blogpad.reactor.installer.control.PostsStoreClient;
+import io.quarkus.runtime.Startup;
 
 
 /**
  *
  * @author airhacks.com
  */
+@Startup
 @ApplicationScoped
 public class Installer {
 
@@ -49,8 +52,12 @@ public class Installer {
     @RegistryType(type = MetricRegistry.Type.APPLICATION)
     MetricRegistry registry;
 
-    @Startup
+    @Inject
+    Blogger LOG;
+
+    @PostConstruct
     public void installTemplates() {
+        LOG.info("initializing");
         String singlePostTemplate = this.content.getSinglePostTemplate();
         Response saveResponse = this.client.saveTemplate(singlePostTemplateFileName, singlePostTemplate);
         registry.counter("installer_single_post_template_status_" + saveResponse.getStatus()).inc();

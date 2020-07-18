@@ -2,6 +2,7 @@
 package blogpad.reactor.installer.boundary;
 
 import blogpad.reactor.installer.control.PostsStoreClient;
+import io.quarkus.runtime.Startup;
 import blogpad.reactor.installer.control.InitialContent;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
@@ -48,10 +49,7 @@ public class Installer {
     @RegistryType(type = MetricRegistry.Type.APPLICATION)
     MetricRegistry registry;
 
-    public void init(@Observes @Initialized(ApplicationScoped.class) Object notUsed) {
-        this.installTemplates();
-    }
-
+    @Startup
     public void installTemplates() {
         String singlePostTemplate = this.content.getSinglePostTemplate();
         Response saveResponse = this.client.saveTemplate(singlePostTemplateFileName, singlePostTemplate);

@@ -16,7 +16,6 @@ services:
   content:
     build: content/content
     container_name: content
-    image: airhacks/content
     environment: 
     - JAEGER_HOST=jaeger
     healthcheck:

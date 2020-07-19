@@ -1,5 +1,5 @@
-import { createStore } from "./lib/redux.js";
+import { createStore,combineReducers } from "./lib/redux.js";
 import { newPostReducer } from "./newpost/entity/NewPostReducer.js";
 
-
-export const store = createStore(newPostReducer, {}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const root = combineReducers({posts:newPostReducer});
+export const store = createStore(root, {}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

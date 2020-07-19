@@ -8,7 +8,7 @@ class EditTemplates extends AirElement {
         return html`
             <section>
             <form>
-                <input requred placeholder="title" name="title" @keyup=${({target:{name,value}}) => textChanged(name,value)}>
+                <input requred placeholder="name" name="name" @keyup=${({target:{name,value}}) => textChanged(name,value)}>
                 <textarea placeholder="content" name="content" @keyup=${({ target: { name, value } }) => textChanged(name,value)}></textarea>
                 <button @click="${e => this.save(e)}">create</button>
             </form>

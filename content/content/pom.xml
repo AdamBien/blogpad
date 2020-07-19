@@ -67,6 +67,10 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-jwt</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-openapi</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -86,9 +90,9 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${compiler-plugin.version}</version>
         <configuration>
-            <compilerArgs>
-                <arg>--enable-preview</arg>
-            </compilerArgs>
+          <compilerArgs>
+            <arg>--enable-preview</arg>
+          </compilerArgs>
         </configuration>
       </plugin>
       <plugin>

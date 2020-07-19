@@ -1,6 +1,6 @@
 import AirElement from "../../AirElement.js";
 import { html } from "../../lib/lit-html.js";
-import { textChanged } from "../control/NewPostControl.js";
+import { textChanged,save } from "../control/NewPostControl.js";
 
 class NewPost extends AirElement { 
 
@@ -10,7 +10,7 @@ class NewPost extends AirElement {
             <form>
                 <input requred placeholder="title" name="title" @keyup=${({target:{name,value}}) => textChanged(name,value)}>
                 <textarea placeholder="content" name="content" @keyup=${({ target: { name, value } }) => textChanged(name,value)}></textarea>
-                <button>create</button>
+                <button @click="${_ => save()}">create</button>
             </form>
             </section>
         `;

@@ -1,0 +1,28 @@
+form{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+
+input, textarea, select, button {
+    width: 20rem;
+    padding: 0;
+    margin: 1em;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 100%;
+
+}
+textarea{
+    height: 20rem;
+}
+
+section{
+    display: flex;
+    flex-direction: row;
+    width:100%;
+    justify-content: center;
+}
+
+

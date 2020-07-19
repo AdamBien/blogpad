@@ -18,7 +18,8 @@ class NewPost extends AirElement {
 
     save(e) { 
         e.preventDefault();
-        save();
+        const { editedPost } = this.state;
+        save(editedPost);
     }
 
     textChanged({ target: { name,value} }) { 

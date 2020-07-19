@@ -15,6 +15,9 @@ export const save = async (post) => {
     requestStarted();
     const response = await fetch("http://localhost:8081/posts", {
         method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
         body: JSON.stringify(post)
     });
     if (response.ok) {

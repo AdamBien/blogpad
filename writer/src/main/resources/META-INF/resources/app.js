@@ -1,4 +1,4 @@
-console.log("Hello Web Standards");
+import './newpost/boundary/NewPost.js';
 
 
 

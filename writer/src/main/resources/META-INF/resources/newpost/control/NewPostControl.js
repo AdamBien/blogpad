@@ -13,7 +13,7 @@ export const textChanged = (name, value) => {
 
 export const save = async (post) => { 
     requestStarted();
-    const response = await fetch("http://localhost:8080/posts", {
+    const response = await fetch("http://localhost:8081/posts", {
         method: "POST",
         body: JSON.stringify(post)
     });

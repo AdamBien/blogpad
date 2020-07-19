@@ -10,10 +10,15 @@ class NewPost extends AirElement {
             <form>
                 <input requred placeholder="title" name="title" @keyup=${({target:{name,value}}) => textChanged(name,value)}>
                 <textarea placeholder="content" name="content" @keyup=${({ target: { name, value } }) => textChanged(name,value)}></textarea>
-                <button @click="${_ => save()}">create</button>
+                <button @click="${e => this.save(e)}">create</button>
             </form>
             </section>
         `;
+    }
+
+    save(e) { 
+        e.preventDefault();
+        save();
     }
 
     textChanged({ target: { name,value} }) { 

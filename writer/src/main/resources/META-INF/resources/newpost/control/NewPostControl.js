@@ -1,5 +1,6 @@
 import { store } from "../../store.js";
-import { NEW_POST_TEXT_CHANGED,RESPONSE_ARRIVED,REQUEST_STARTED} from "../entity/NewPostReducer.js";
+import { NEW_POST_TEXT_CHANGED} from "../entity/NewPostReducer.js";
+import { requestStarted, responseArrived } from "../../backend/control/CommunicationService.js";
 
 export const textChanged = (name, value) => { 
     store.dispatch({
@@ -25,18 +26,5 @@ export const save = async (post) => {
     } else { 
         responseArrived(false);
     }
-    
 }
 
-const responseArrived = (status) => { 
-    store.dispatch({
-        type: RESPONSE_ARRIVED,
-        status
-    });
-}
-
-const requestStarted = () => { 
-    store.dispatch({
-        type:REQUEST_STARTED
-    });
-}

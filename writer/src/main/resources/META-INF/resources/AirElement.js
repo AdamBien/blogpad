@@ -16,8 +16,14 @@ export default class AirElement extends HTMLElement {
         console.group(this.log('connectedCallback'))
         this.unsubscribe = store.subscribe(_ => this.triggerViewUpdate());
         console.log('subscribed for redux changes');
+        this.postConstruct();
+        console.log('postConstruct called');
         this.triggerViewUpdate();
         console.groupEnd(this.log('connectedCallback'));
+    }
+
+    postConstruct() { 
+
     }
 
     disconnectedCallback() { 

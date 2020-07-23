@@ -1,8 +1,12 @@
 import AirElement from "../../AirElement.js";
 import { html } from "../../lib/lit-html.js";
-import { textChanged,save } from "../control/EditTemplatesControl.js";
+import { textChanged,save, loadInitialState } from "../control/EditTemplatesControl.js";
 
 class EditTemplates extends AirElement { 
+
+    postConstruct() { 
+        loadInitialState();
+    }
 
     view() { 
         return html`

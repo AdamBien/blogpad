@@ -13,7 +13,7 @@ class EditTemplates extends AirElement {
     }
 
     view() { 
-        const { list } = this.state;
+        const { list,editedTemplate } = this.state;
         return html`
             <section>
             <form>
@@ -21,7 +21,8 @@ class EditTemplates extends AirElement {
                     ${list.map(template => template.templateName).
                         map(name => html`<option value="${name}">${name}</option>`)}
                 </select>
-                <textarea placeholder="content" name="content" @keyup=${({ target: { name, value } }) => textChanged(name,value)}></textarea>
+                <textarea .value=${editedTemplate.content} placeholder="content" name="content" @keyup=${({ target: { name, value } }) => textChanged(name, value)}>
+                </textarea>
                 <button @click="${e => this.save(e)}">create</button>
             </form>
             </section>

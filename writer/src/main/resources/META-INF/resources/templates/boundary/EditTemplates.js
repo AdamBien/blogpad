@@ -18,7 +18,8 @@ class EditTemplates extends AirElement {
             <section>
             <form>
                 <select name="name" @input="${({ target: { value } }) => selectTemplate(list,value)}">
-                    ${list.map(template => template.templateName).
+                  <option value="" disabled selected hidden>templates...</option>
+                   ${list.map(template => template.templateName).
                         map(name => html`<option value="${name}">${name}</option>`)}
                 </select>
                 <textarea .value=${editedTemplate.content} placeholder="content" name="content" @keyup=${({ target: { name, value } }) => textChanged(name, value)}>

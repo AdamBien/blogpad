@@ -1,6 +1,14 @@
 import { requestStarted,responseArrived } from "../../backend/control/CommunicationService.js";
 import { store } from "../../store.js";
-import { INITIAL_TEMPLATES_ARRIVED } from "../entity/EditTemplatesReducer.js";
+import { INITIAL_TEMPLATES_ARRIVED,TEMPLATE_SELECTED } from "../entity/EditTemplatesReducer.js";
+
+export const selectTemplate = (list,templateName) => { 
+    const selected = list.find(template => template.templateName === templateName);
+    store.dispatch({
+        type: TEMPLATE_SELECTED,
+        payload:selected
+    });
+}
 
 export const loadInitialState = async () => { 
     requestStarted();

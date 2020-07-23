@@ -1,6 +1,6 @@
 import AirElement from "../../AirElement.js";
 import { html } from "../../lib/lit-html.js";
-import { textChanged,save, loadInitialState } from "../control/EditTemplatesControl.js";
+import { textChanged,save, loadInitialState,selectTemplate } from "../control/EditTemplatesControl.js";
 
 class EditTemplates extends AirElement { 
 
@@ -17,7 +17,7 @@ class EditTemplates extends AirElement {
         return html`
             <section>
             <form>
-                <select name="name">
+                <select name="name" @input="${({ target: { value } }) => selectTemplate(list,value)}">
                     ${list.map(template => template.templateName).
                         map(name => html`<option value="${name}">${name}</option>`)}
                 </select>

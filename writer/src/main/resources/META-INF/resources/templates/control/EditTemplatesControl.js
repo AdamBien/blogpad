@@ -1,6 +1,6 @@
 import { requestStarted,responseArrived } from "../../backend/control/CommunicationService.js";
 import { store } from "../../store.js";
-import { INITIAL_TEMPLATES_ARRIVED,TEMPLATE_SELECTED } from "../entity/EditTemplatesReducer.js";
+import { INITIAL_TEMPLATES_ARRIVED,TEMPLATE_SELECTED,TOGGLE_PREVIEW } from "../entity/EditTemplatesReducer.js";
 
 export const selectTemplate = (list,templateName) => { 
     const selected = list.find(template => template.templateName === templateName);
@@ -23,6 +23,12 @@ export const loadInitialState = async () => {
         responseArrived(false);
     }
     responseArrived(true);
+}
+
+export const togglePreview = () => { 
+    store.dispatch({
+        type: TOGGLE_PREVIEW
+    });
 }
 
 

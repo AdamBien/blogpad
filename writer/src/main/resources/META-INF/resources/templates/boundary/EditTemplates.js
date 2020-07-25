@@ -1,6 +1,6 @@
 import AirElement from "../../AirElement.js";
 import { html } from "../../lib/lit-html.js";
-import { textChanged,save, loadInitialState,selectTemplate } from "../control/EditTemplatesControl.js";
+import { textChanged,save,togglePreview,loadInitialState,selectTemplate } from "../control/EditTemplatesControl.js";
 
 class EditTemplates extends AirElement { 
 
@@ -24,10 +24,18 @@ class EditTemplates extends AirElement {
                 </select>
                 <textarea .value=${editedTemplate.content} placeholder="content" name="content" @keyup=${({ target: { name, value } }) => textChanged(name, value)}>
                 </textarea>
-                <button @click="${e => this.save(e)}">create</button>
+                <section>
+                    <button @click="${e => this.save(e)}">create</button>
+                    <button @click="${e => this.preview(e)}">preview</button>
+                </section>
             </form>
             </section>
         `;
+    }
+
+    preview(e) { 
+        e.preventDefault();
+        togglePreview();
     }
 
     save(e) { 

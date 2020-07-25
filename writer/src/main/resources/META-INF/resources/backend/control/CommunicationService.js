@@ -15,15 +15,30 @@ const requestStarted = () => {
 }
 
 export const post = async (uri, body) => {
-    request(uri,'POST',body);
+    voidRequest(uri,'POST',body);
 }
 
 export const put = async (uri, body) => {
-    request(uri,'PUT',body);
+    voidRequest(uri,'PUT',body);
+}
+
+export const get = async (uri) => { 
+    return await bodylessRequest(uri);
+}
+
+const bodylessRequest = async (uri) => { 
+    const response = await fetch(uri);
+    if (response.ok) {
+        responseArrived(true);
+    } else { 
+        responseArrived(false);
+        return;
+    }
+    return await response.json();
 }
 
 
-const request = async (uri,httpMethod,body) => { 
+const voidRequest = async (uri,httpMethod,body) => { 
     debugger
     requestStarted();
     const response = await fetch(uri, {

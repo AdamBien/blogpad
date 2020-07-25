@@ -1,6 +1,6 @@
-import { requestStarted,responseArrived } from "../../backend/control/CommunicationService.js";
 import { store } from "../../store.js";
 import { INITIAL_TEMPLATES_ARRIVED,TEMPLATE_SELECTED,TOGGLE_PREVIEW,TEMPLATE_TEXT_CHANGED } from "../entity/EditTemplatesReducer.js";
+import { get } from "../../backend/control/CommunicationService.js";
 
 export const selectTemplate = (list,templateName) => { 
     const selected = list.find(template => template.templateName === templateName);
@@ -11,18 +11,11 @@ export const selectTemplate = (list,templateName) => {
 }
 
 export const loadInitialState = async () => { 
-    requestStarted();
-    try {
-        const response = await fetch("http://localhost:8081/templates")
-        const payload = await response.json();
+        const payload = await get("http://localhost:8081/templates");
         store.dispatch({
             type: INITIAL_TEMPLATES_ARRIVED,
             payload
         });
-    } catch (error) { 
-        responseArrived(false);
-    }
-    responseArrived(true);
 }
 
 export const togglePreview = () => { 

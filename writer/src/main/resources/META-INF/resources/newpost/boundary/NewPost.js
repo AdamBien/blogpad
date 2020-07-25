@@ -4,6 +4,10 @@ import { textChanged,save } from "../control/NewPostControl.js";
 
 class NewPost extends AirElement { 
 
+    extractState({ posts }) { 
+        return posts;
+    }
+
     view() { 
         return html`
             <section>

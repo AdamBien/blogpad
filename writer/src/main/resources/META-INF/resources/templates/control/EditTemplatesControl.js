@@ -25,9 +25,9 @@ export const togglePreview = () => {
 }
 
 export const save = (editedTemplate) => { 
-    const { templateName } = editedTemplate;
+    const { templateName,content } = editedTemplate;
     const uri = `http://localhost:8081/templates/${templateName}`;
-    put(uri, editedTemplate);
+    put(uri, content);
 }
 export const textChanged = (name, value) => { 
     store.dispatch({
@@ -37,5 +37,4 @@ export const textChanged = (name, value) => {
             value
         }
     })
-    
 }

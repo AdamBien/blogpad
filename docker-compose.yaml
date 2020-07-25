@@ -7,7 +7,7 @@ services:
     - "CONTENT_MP_REST_URI=http://content:8080/"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 5s
+      interval: 1m
       timeout: 1s
       retries: 5    
     ports:
@@ -17,7 +17,7 @@ services:
     container_name: content
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 5s
+      interval: 1m
       timeout: 1s
       retries: 5    
     ports:

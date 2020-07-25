@@ -39,7 +39,6 @@ const bodylessRequest = async (uri) => {
 
 
 const voidRequest = async (uri,httpMethod,body) => { 
-    debugger
     requestStarted();
     const response = await fetch(uri, {
         method: httpMethod,

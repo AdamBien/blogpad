@@ -1,6 +1,6 @@
 import { store } from "../../store.js";
 import { INITIAL_TEMPLATES_ARRIVED,TEMPLATE_SELECTED,TOGGLE_PREVIEW,TEMPLATE_TEXT_CHANGED } from "../entity/EditTemplatesReducer.js";
-import { get } from "../../backend/control/CommunicationService.js";
+import { get, put } from "../../backend/control/CommunicationService.js";
 
 export const selectTemplate = (list,templateName) => { 
     const selected = list.find(template => template.templateName === templateName);
@@ -24,9 +24,10 @@ export const togglePreview = () => {
     });
 }
 
-
 export const save = (editedTemplate) => { 
-        put("http://localhost:8081/templates",editedTemplate);
+    const { templateName } = editedTemplate;
+    const uri = `http://localhost:8081/templates/${templateName}`;
+    put(uri, editedTemplate);
 }
 export const textChanged = (name, value) => { 
     store.dispatch({

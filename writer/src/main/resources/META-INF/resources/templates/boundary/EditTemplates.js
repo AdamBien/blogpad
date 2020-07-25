@@ -40,8 +40,8 @@ class EditTemplates extends AirElement {
 
     save(e) { 
         e.preventDefault();
-        const { editedPost } = this.state;
-        save(editedPost);
+        const { editedTemplate } = this.state;
+        save(editedTemplate);
     }
 
     textChanged({ target: { name,value} }) { 

@@ -45,7 +45,7 @@ const voidRequest = async (uri,httpMethod,body) => {
         headers: {
             "Content-type": "application/json"
         },
-        body: JSON.stringify(body)
+        body
     });
     if (response.ok) {
         responseArrived(true);

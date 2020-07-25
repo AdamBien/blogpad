@@ -33,7 +33,7 @@ export const togglePreview = () => {
 
 
 export const save = (editedTemplate) => { 
-
+        put("http://localhost:8081/templates",editedTemplate);
 }
 export const textChanged = (name, value) => { 
     store.dispatch({

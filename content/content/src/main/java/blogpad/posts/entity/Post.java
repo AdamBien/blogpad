@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  *
  * @author airhacks.com
@@ -12,7 +14,9 @@ import java.util.List;
 public class Post {
 
     public String fileName;
+    @NotBlank
     public String title;
+    @NotBlank
     public String content;
     public LocalDateTime createdAt;
     public LocalDateTime modifiedAt;

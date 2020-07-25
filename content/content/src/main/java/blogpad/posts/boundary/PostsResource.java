@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -67,7 +69,7 @@ public class PostsResource {
 
 
     @PUT
-    public Response update(@Context UriInfo info, Post post) {
+    public Response update(@Context UriInfo info, @Valid @NotNull Post post) {
         String fileName = this.store.update(post);
         URI uri = info.
                 getAbsolutePathBuilder().
@@ -77,7 +79,7 @@ public class PostsResource {
     }
 
     @POST
-    public Response created(@Context UriInfo info, Post post) {
+    public Response created(@Context UriInfo info, @Valid @NotNull Post post) {
         String fileName = this.store.create(post);
         URI uri = info.
                 getAbsolutePathBuilder().

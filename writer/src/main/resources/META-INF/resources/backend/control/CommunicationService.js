@@ -14,8 +14,8 @@ const requestStarted = () => {
     });
 }
 
-export const post = async (uri, body) => {
-    voidRequest(uri,'POST',body);
+export const post = async (uri, stringifiedBody) => {
+    voidRequest(uri,'POST',stringifiedBody);
 }
 
 export const put = async (uri, body) => {

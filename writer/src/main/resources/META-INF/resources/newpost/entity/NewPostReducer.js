@@ -10,7 +10,6 @@ export const newPostReducer = (state = { editedPost: {}}, action) => {
             }
         }            
     }
-
     return state;
 }
 

@@ -19,7 +19,7 @@ class PostList extends AirElement {
     }
 
     post({ title,uniqueName,createdAt,modifiedAt }) { 
-    return html`<li><a href="/posts/${uniqueName}">${title}</a>, ${createdAt} ${modifiedAt} <button class="button--delete" @click="${e => deletePost(title)}">delete</button></li>`;
+    return html`<li><a href="/posts/${uniqueName}">${title}</a>, ${createdAt} ${modifiedAt} <button class="button--delete" @click="${e => deletePost(uniqueName)}">delete</button></li>`;
     }
 
 }

@@ -28,3 +28,7 @@ section{
 li{
     list-style: none;
 }
+
+.button--delete{
+    width: 5em;
+}

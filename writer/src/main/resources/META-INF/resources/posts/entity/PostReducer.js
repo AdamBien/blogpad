@@ -5,17 +5,17 @@ export const newPostReducer = (state = { editedPost: {},list:[]}, action) => {
     const { type } = action;
     switch (type) { 
         case NEW_POST_TEXT_CHANGED:
-            newPostTextChanged(state, action);
+            return newPostTextChanged(state, action);
         case ALL_POSTS_FETCHED:
-            allPostsFetched(state,action);
+            return allPostsFetched(state,action);
     }
     return state;
 }
 
-const allPostsFetched = (state, { payload }) => { 
+const allPostsFetched = (state, { payload: { posts } }) => { 
     return {
         ...state,
-        list: payload
+        list: posts
     }
 }
 

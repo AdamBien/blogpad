@@ -1,10 +1,6 @@
-import { AirElement } from "../../AirElement.js";
-
+import AirElement  from "../../AirElement.js";
+import { html } from "../../lib/lit-html.js";
 class PostList extends AirElement { 
-
-    postConstruct() { 
-
-    }
 
     view() { 
         return html`
@@ -19,3 +15,5 @@ class PostList extends AirElement {
     }
 
 }
+
+customElements.define('b-postlist',PostList);

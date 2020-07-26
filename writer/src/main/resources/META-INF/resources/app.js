@@ -6,6 +6,7 @@ const outlet = document.querySelector('output');
 const router = new Router(outlet);
 router.setRoutes([
   {path: '/',     component: 'b-posteditor'},
+  {path: '/posts/:post',     component: 'b-posteditor'},
   {path: '/templates',  component: 'b-edittemplates'},
   {path: '(.*)', component: 'b-navigationerror'},
 ]);

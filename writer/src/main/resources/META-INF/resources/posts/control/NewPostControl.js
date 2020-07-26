@@ -1,6 +1,7 @@
 import { store } from "../../store.js";
 import { NEW_POST_TEXT_CHANGED} from "../entity/PostReducer.js";
 import { post } from "../../backend/control/CommunicationService.js";
+import { fetchAllPosts } from "./PostListService.js";
 
 export const textChanged = (name, value) => { 
     store.dispatch({
@@ -14,6 +15,7 @@ export const textChanged = (name, value) => {
 
 export const save = async (newPost) => { 
     const stringified = JSON.stringify(newPost);
-    post("http://localhost:8081/posts",stringified);
+    await post("http://localhost:8081/posts", stringified);
+    await fetchAllPosts();
 }
 

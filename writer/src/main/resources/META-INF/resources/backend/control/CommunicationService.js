@@ -1,10 +1,13 @@
 import { RESPONSE_ARRIVED,REQUEST_STARTED} from "../entity/CommunicationReducer.js";
 import { store } from "../../store.js";
 
-const responseArrived = (status) => { 
+const responseArrived = (status,headers) => { 
     store.dispatch({
         type: RESPONSE_ARRIVED,
-        status
+        payload: {
+            status,
+            headers
+        }
     });
 }
 
@@ -14,8 +17,8 @@ const requestStarted = () => {
     });
 }
 
-export const post = async (uri, stringifiedBody) => {
-    voidRequest(uri,'POST',stringifiedBody);
+export const voidPost = async (uri, stringifiedBody) => {
+    await voidRequest(uri, 'POST', stringifiedBody);
 }
 
 export const put = async (uri, body) => {
@@ -43,11 +46,12 @@ const bodylessRequest = async (uri,httpMethod) => {
     const response = await fetch(uri, {
         method:httpMethod
     });
+    const { headers } = response;    
     if (response.ok) {
-        responseArrived(true);
+        responseArrived(true,headers);
     } else { 
-        responseArrived(false);
-        return;
+        responseArrived(false,headers);
+        response;
     }
     return await response.json();
 }
@@ -56,11 +60,11 @@ const voidBodylessRequest = async (uri,httpMethod) => {
     const response = await fetch(uri, {
         method:httpMethod
     });
+    const { headers } = response;
     if (response.ok) {
-        responseArrived(true);
+        responseArrived(true,headers);
     } else { 
-        responseArrived(false);
-        return;
+        responseArrived(false,headers);
     }
 }
 
@@ -69,14 +73,16 @@ const voidRequest = async (uri,httpMethod,body) => {
     requestStarted();
     const response = await fetch(uri, {
         method: httpMethod,
+        redirect: 'follow',
         headers: {
             "Content-type": "application/json"
         },
         body
     });
+    const { headers } = response;
     if (response.ok) {
-        responseArrived(true);
+        responseArrived(true,headers);
     } else { 
-        responseArrived(false);
+        responseArrived(false,headers);
     }
 }

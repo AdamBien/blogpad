@@ -16,7 +16,7 @@ export const communicationReducer = (state = {}, action) => {
             return {
                 ...state,
                     inProgress: false,
-                    success: payload
+                    result: payload
             }
         }
 

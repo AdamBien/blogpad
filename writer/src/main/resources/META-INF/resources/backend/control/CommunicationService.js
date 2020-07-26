@@ -26,7 +26,13 @@ export const get = async (uri) => {
     return await bodylessRequest(uri);
 }
 
-
+export const getAndDispatch = async (uri,actionType) => { 
+    const payload = await get(uri);
+    store.dispatch({
+        type: actionType,
+        payload
+    });
+}
 
 const bodylessRequest = async (uri) => { 
     requestStarted();

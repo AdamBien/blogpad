@@ -1,5 +1,5 @@
 import { Router } from "./lib/@vaadin/router.js";
-import './newpost/boundary/NewPost.js';
+import './posts/boundary/NewPost.js';
 import './templates/boundary/EditTemplates.js';
 
 const outlet = document.querySelector('output');

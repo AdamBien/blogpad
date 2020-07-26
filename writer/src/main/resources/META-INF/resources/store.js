@@ -1,5 +1,5 @@
 import { createStore,combineReducers } from "./lib/redux.js";
-import { newPostReducer } from "./newpost/entity/NewPostReducer.js";
+import { newPostReducer } from "./posts/entity/PostReducer.js";
 import { editTemplatesReducer } from "./templates/entity/EditTemplatesReducer.js";
 import { communicationReducer } from "./backend/entity/CommunicationReducer.js";
 

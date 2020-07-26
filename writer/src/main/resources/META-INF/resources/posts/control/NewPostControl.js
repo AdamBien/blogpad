@@ -1,5 +1,5 @@
 import { store } from "../../store.js";
-import { NEW_POST_TEXT_CHANGED} from "../entity/NewPostReducer.js";
+import { NEW_POST_TEXT_CHANGED} from "../entity/PostReducer.js";
 import { post } from "../../backend/control/CommunicationService.js";
 
 export const textChanged = (name, value) => { 

@@ -1,5 +1,6 @@
 import AirElement  from "../../AirElement.js";
 import { html } from "../../lib/lit-html.js";
+
 class PostList extends AirElement { 
 
     extractState({ posts: { list } }) { 
@@ -14,8 +15,8 @@ class PostList extends AirElement {
         `;
     }
 
-    post({ title }) { 
-        return html`<li>${title}</li>`;
+    post({ title,createdAt,modifiedAt }) { 
+        return html`<li>${title}, ${createdAt} ${modifiedAt}</li>`;
     }
 
 }

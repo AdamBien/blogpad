@@ -85,7 +85,9 @@ public class PostsResource {
                 getAbsolutePathBuilder().
                 path(fileName).
                 build();
-        return Response.created(uri).build();
+        return Response.created(uri).
+                header("unique-name", fileName).
+        build();
     }
 
 

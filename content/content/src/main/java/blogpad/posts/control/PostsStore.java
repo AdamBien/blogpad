@@ -182,7 +182,7 @@ public class PostsStore {
 
     void archivePost(Post post) {
         String title = post.title;
-        Path postFile = this.postsDirectory.resolve(post.getFileName());
+        Path postFile = this.postsDirectory.resolve(post.uniqueName);
         Path titlePath = this.titleToPath(title);
         Path archivePath = this.archiveDirectory.resolve(titlePath);
         try {

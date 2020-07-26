@@ -54,10 +54,6 @@ public class Post {
         return this;
     }
 
-    public String getFileName() {
-        return uniqueName;
-    }
-
     public Post withTitle(String fileName) {
         this.uniqueName = fileName;
         return this;

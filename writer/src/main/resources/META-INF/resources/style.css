@@ -25,4 +25,6 @@ section{
     justify-content: center;
 }
 
-
+li{
+    list-style: none;
+}

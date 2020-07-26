@@ -12,8 +12,10 @@ class PostEditor extends AirElement {
 
     view() { 
         return html`
+        <section>
             <b-newpost></b-newpost>
             <b-postlist></b-postlist>
+        </section>
         `;
     }
 

@@ -26,7 +26,10 @@ export const get = async (uri) => {
     return await bodylessRequest(uri);
 }
 
+
+
 const bodylessRequest = async (uri) => { 
+    requestStarted();
     const response = await fetch(uri);
     if (response.ok) {
         responseArrived(true);

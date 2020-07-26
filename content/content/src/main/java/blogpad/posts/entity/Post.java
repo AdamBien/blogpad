@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
  */
 public class Post {
 
-    public String fileName;
+    public String uniqueName;
     @NotBlank
     public String title;
     @NotBlank
@@ -55,11 +55,11 @@ public class Post {
     }
 
     public String getFileName() {
-        return fileName;
+        return uniqueName;
     }
 
     public Post withTitle(String fileName) {
-        this.fileName = fileName;
+        this.uniqueName = fileName;
         return this;
     }
 

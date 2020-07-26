@@ -82,7 +82,7 @@ public class PostsStore {
 
         String normalizedTitle = this.normalizer.normalize(title);
         String uniqueFileName = getUniqueFileName(normalizedTitle);
-        updatedPost.fileName = uniqueFileName;
+        updatedPost.uniqueName = uniqueFileName;
         String content = serialize(updatedPost);
         write(this.postsDirectory, uniqueFileName, content);
         return uniqueFileName;

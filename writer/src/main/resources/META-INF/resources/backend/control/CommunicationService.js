@@ -23,7 +23,11 @@ export const put = async (uri, body) => {
 }
 
 export const get = async (uri) => { 
-    return await bodylessRequest(uri);
+    return await bodylessRequest(uri,'GET');
+}
+
+export const deleteRequest = async (uri) => { 
+    return await voidBodylessRequest(uri,'DELETE');
 }
 
 export const getAndDispatch = async (uri,actionType) => { 
@@ -34,9 +38,11 @@ export const getAndDispatch = async (uri,actionType) => {
     });
 }
 
-const bodylessRequest = async (uri) => { 
+const bodylessRequest = async (uri,httpMethod) => { 
     requestStarted();
-    const response = await fetch(uri);
+    const response = await fetch(uri, {
+        method:httpMethod
+    });
     if (response.ok) {
         responseArrived(true);
     } else { 
@@ -44,6 +50,18 @@ const bodylessRequest = async (uri) => {
         return;
     }
     return await response.json();
+}
+const voidBodylessRequest = async (uri,httpMethod) => { 
+    requestStarted();
+    const response = await fetch(uri, {
+        method:httpMethod
+    });
+    if (response.ok) {
+        responseArrived(true);
+    } else { 
+        responseArrived(false);
+        return;
+    }
 }
 
 

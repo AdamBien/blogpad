@@ -1,5 +1,6 @@
 import AirElement  from "../../AirElement.js";
 import { html } from "../../lib/lit-html.js";
+import { deletePost } from "../control/PostListService.js";
 
 class PostList extends AirElement { 
 
@@ -16,7 +17,7 @@ class PostList extends AirElement {
     }
 
     post({ title,createdAt,modifiedAt }) { 
-        return html`<li>${title}, ${createdAt} ${modifiedAt}</li>`;
+        return html`<li>${title}, ${createdAt} ${modifiedAt} <button class="button--delete" @click="${e => deletePost(title)}">delete</button></li>`;
     }
 
 }

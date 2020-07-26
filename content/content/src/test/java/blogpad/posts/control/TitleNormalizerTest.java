@@ -31,7 +31,7 @@ public class TitleNormalizerTest {
     public void validTitle() {
         String expected = "helloworld";
         String actual = this.cut.normalize(expected);
-        assertEquals(actual, expected);
+        assertEquals(expected,actual);
     }
 
     @Test
@@ -39,14 +39,22 @@ public class TitleNormalizerTest {
         String input = "hello/world";
         String actual = this.cut.normalize(input);
 
-        assertEquals(actual, "hello-world");
+        assertEquals("hello-world",actual);
     }
 
     @Test
     public void emptyTitle() {
         String input = "";
         String actual = this.cut.normalize(input);
-        assertEquals(actual, "");
+        assertEquals("",actual);
+    }
+
+    @Test
+    public void capitalizedTitle() {
+        String input = "HelloWorld";
+        String actual = this.cut.normalize(input);
+        assertEquals("helloworld",actual);
+        
     }
 
 }

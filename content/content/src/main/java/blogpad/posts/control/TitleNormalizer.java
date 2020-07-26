@@ -22,7 +22,8 @@ public class TitleNormalizer {
                 collect(StringBuilder::new,
                         StringBuilder::appendCodePoint,
                         StringBuilder::append).
-                toString();
+                toString().
+                toLowerCase();
     }
 
     int replaceWithSeparator(int character) {

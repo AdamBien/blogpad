@@ -8,6 +8,7 @@ import static blogpad.storage.control.FileOperations.write;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
@@ -185,11 +186,19 @@ public class PostsStore {
         Path postFile = this.postsDirectory.resolve(post.uniqueName);
         Path titlePath = this.titleToPath(title);
         Path archivePath = this.archiveDirectory.resolve(titlePath);
+        if (Files.exists(archivePath)) {
+            archivePath = createUniquePath(archivePath);
+        }
         try {
             Files.move(postFile, archivePath);
         } catch (IOException ex) {
             throw new StorageException("Cannot archive post with title: " + title + " Reason: " + ex);
         }
+    }
+
+    Path createUniquePath(Path path) {
+        var normalizedDate = this.normalizer.normalize(LocalDateTime.now().toString());
+        return Path.of(path.getFileName().toString()+"-"+normalizedDate);
     }
 
     Path titleToPath(String title) {

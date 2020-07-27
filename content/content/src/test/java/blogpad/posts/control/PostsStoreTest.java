@@ -139,9 +139,17 @@ public class PostsStoreTest {
 
     @Test
     public void getNonExistingPost() {
-        Post post = this.cut.getPost("-no-existing-" + System.currentTimeMillis()).
-                orElse(null);
+        Post post = this.cut.getPost("-no-existing-" + System.currentTimeMillis()).orElse(null);
         assertNull(post);
+
+    }
+    
+    @Test
+    public void createUniquePath(){
+        var input = Path.of("post");
+        var actual = this.cut.createUniquePath(input);
+        assertNotNull(actual);
+        System.out.println(actual);
 
     }
 

@@ -21,7 +21,7 @@ export const voidPost = async (uri, stringifiedBody) => {
     await voidRequest(uri, 'POST', stringifiedBody);
 }
 
-export const put = async (uri, body) => {
+export const voidPut = async (uri, body) => {
     voidRequest(uri,'PUT',body);
 }
 
